@@ -1,0 +1,22 @@
+<h1>Ingredients</h1>
+<hr>
+<div class="flex flex-row">
+  <ul role="list" class="basis-1/2 divide-y divide-gray-100">
+    @for (ingredient of (ingredients$ | async);track ingredient){
+      <li class="flex justify-between gap-x-6 py-5">
+        <div class="flex min-w-0 gap-x-4">
+          <img class="size-12 flex-none rounded-full bg-gray-50" alt="ingredient" src="{{ingredient.image}}">
+          <div class="min-w-0 flex-auto">
+            <p class="text-sm/6 font-semibold text-gray-900">{{ingredient.name}}</p>
+          </div>
+        </div>
+      </li>
+    }
+  </ul>
+  <div class="basis-1/2">
+    aaaa
+  </div>
+</div>
+
+
+
