@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {map, Observable, tap} from "rxjs";
+import { Observable, tap} from "rxjs";
 import {Ingredient} from "./model/Ingredient";
 import {IngredientService} from "./ingredient.service";
 import {AsyncPipe} from "@angular/common";

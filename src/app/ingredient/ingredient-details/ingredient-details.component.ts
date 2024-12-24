@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {catchError, EMPTY, map, Observable, of, switchMap, tap} from "rxjs";
+import {catchError, EMPTY, Observable, switchMap} from "rxjs";
 import {IngredientService} from "../ingredient.service";
 import {IngredientDetails} from "../model/IngerdientDetails";
 import {AsyncPipe} from "@angular/common";
