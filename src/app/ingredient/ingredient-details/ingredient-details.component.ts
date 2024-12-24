@@ -4,12 +4,14 @@ import {catchError, EMPTY, Observable, switchMap} from "rxjs";
 import {IngredientService} from "../ingredient.service";
 import {IngredientDetails} from "../model/IngerdientDetails";
 import {AsyncPipe} from "@angular/common";
+import {FalsyValuesPipe} from "../../pipes/falsy-values.pipe";
 
 @Component({
   selector: 'app-ingredient-details',
   standalone: true,
   imports: [
-    AsyncPipe
+    AsyncPipe,
+    FalsyValuesPipe
   ],
   templateUrl: './ingredient-details.component.html',
   styleUrl: './ingredient-details.component.css'

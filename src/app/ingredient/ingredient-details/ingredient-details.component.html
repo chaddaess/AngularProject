@@ -10,19 +10,19 @@
       <tbody class="bg-white divide-y divide-gray-200">
       <tr>
         <td class="px-4 py-2 text-sm text-gray-600">Energy</td>
-        <td class="px-4 py-2 text-sm text-gray-800">{{details.energy}} kcal /{{details.energy *4.184}} kJ</td>
+        <td class="px-4 py-2 text-sm text-gray-800">{{details.energy|falsyValues:'kcal'}} /{{details.energy *4.184 |falsyValues:'kJ'}}</td>
       </tr>
       <tr>
         <td class="px-4 py-2 text-sm text-gray-600">Protein</td>
-        <td class="px-4 py-2 text-sm text-gray-800">{{details.protein}} g</td>
+        <td class="px-4 py-2 text-sm text-gray-800">{{ details.protein | falsyValues:' g' }}</td>
       </tr>
       <tr>
         <td class="px-4 py-2 text-sm text-gray-600">Carbohydrates</td>
-        <td class="px-4 py-2 text-sm text-gray-800">{{details.carbohydrates}} g</td>
+        <td class="px-4 py-2 text-sm text-gray-800">{{details.carbohydrates|falsyValues:'g'}} </td>
       </tr>
       <tr>
         <td class="px-4 py-2 text-sm text-gray-600">Sugar in carbohydrates</td>
-        <td class="px-4 py-2 text-sm text-gray-800">{{details.carbohydrates_sugar}} g</td>
+        <td class="px-4 py-2 text-sm text-gray-800">{{details.carbohydrates_sugar|falsyValues:'g'}} </td>
       </tr>
       <tr>
         <td class="px-4 py-2 text-sm text-gray-600">Fat</td>
@@ -30,7 +30,7 @@
       </tr>
       <tr>
         <td class="px-4 py-2 text-sm text-gray-600">Saturated fatty acid content in fatty acids</td>
-        <td class="px-4 py-2 text-sm text-gray-800">{{details.fat_saturated}} g</td>
+        <td class="px-4 py-2 text-sm text-gray-800">{{details.fat_saturated| falsyValues:'g'}} </td>
       </tr>
       </tbody>
 
@@ -42,11 +42,11 @@
       <tbody class="bg-white divide-y divide-gray-200">
       <tr>
         <td class="px-4 py-2 text-sm text-gray-600">Fiber</td>
-        <td class="px-4 py-2 text-sm text-gray-800">{{details.fiber}} g</td>
+        <td class="px-4 py-2 text-sm text-gray-800">{{details.fiber| falsyValues:'g'}} </td>
       </tr>
       <tr>
         <td class="px-4 py-2 text-sm text-gray-600">Sodium</td>
-        <td class="px-4 py-2 text-sm text-gray-800">{{details.sodium}} g</td>
+        <td class="px-4 py-2 text-sm text-gray-800">{{details.sodium| falsyValues:'g'}} </td>
       </tr>
       </tbody>
 
