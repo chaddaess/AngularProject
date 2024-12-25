@@ -1,0 +1,11 @@
+<ul>
+  @for (muscle of muscles$ |async; track muscle.id) {
+    <li>
+      {{ muscle.id }} {{ muscle.name }}
+      <div class="muscle-background mx-auto"
+           style="background: url({{API.root}}static/images/muscles/muscular_system_back.svg) no-repeat;">
+        <img ngSrc="{{API.root}}{{muscle.image_url_main}}" width="200" height="369" alt="{{muscle.name}}">
+      </div>
+    </li>
+  }
+</ul>
