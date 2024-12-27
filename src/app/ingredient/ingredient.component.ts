@@ -1,5 +1,5 @@
-import {Component, inject} from '@angular/core';
-import { Observable, tap} from "rxjs";
+import {Component, inject, signal} from '@angular/core';
+import {map, Observable, tap} from "rxjs";
 import {Ingredient} from "./model/Ingredient";
 import {IngredientService} from "./ingredient.service";
 import {AsyncPipe} from "@angular/common";
@@ -22,19 +22,29 @@ export class IngredientComponent {
   ingredientService=inject(IngredientService)
   router=inject(Router)
   ingredients$:Observable<Ingredient[]>;
-  limit:number;
+  limit=5; //TODO: find a better placement for this than hardcoding
+  total=signal(0);
   constructor() {
-      this.limit=10;
-      this.ingredients$=this.ingredientService.getIngredients({limit:this.limit,offset:0});
+    this.ingredients$ = this.ingredientService.getIngredients({ limit: this.limit, offset:0 }).pipe(
+      map((response) => {
+        this.total.set(response.total/this.limit);
+        return response.ingredients;
+      })
+    );
       this.ingredientService.selectedIngredient$.pipe(
         tap((ingredient)=>{
           this.router.navigate(['ingredients',ingredient.id])
         })
       ).subscribe()
   }
-  onPageChange(page:any){
+  onPageChange(page:number){
     let offset=(page-1)*this.limit;
-    this.ingredients$=this.ingredientService.getIngredients({limit:this.limit,offset:offset})
+    this.ingredients$ = this.ingredientService.getIngredients({ limit: this.limit, offset:offset }).pipe(
+      map((response) => {
+        this.total.set(response.total/this.limit)
+        return response.ingredients;
+      })
+    );
   }
 
 

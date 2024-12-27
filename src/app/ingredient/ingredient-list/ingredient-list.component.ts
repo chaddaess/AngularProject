@@ -1,4 +1,4 @@
-import {Component, inject, Input, signal} from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output, signal} from '@angular/core';
 import {AsyncPipe} from "@angular/common";
 import {Ingredient} from "../model/Ingredient";
 import {IngredientItemComponent} from "../ingredient-item/ingredient-item.component";
@@ -25,22 +25,21 @@ import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 export class IngredientListComponent {
   paginatorService=inject(PaginatorService)
   @Input() ingredients:Ingredient[]|null=[]
-  currentPage: number = 1;
-  totalPages:number=10; //TODO:change hardcoded value
-  visiblePages=signal<number[]>([1,2,3,4,5])
+  @Output() pageChange=new EventEmitter<number>()
+  @Input()  totalPages=10
+  initialNumberOfPages = this.totalPages < 5 ? this.totalPages :5 ; //number of page choices on the paginator
+  visiblePages = signal<number[]>(Array.from({ length: this.initialNumberOfPages}, (_, i) => i + 1));
 
   constructor() {
     this.paginatorService.selectedPage$.pipe(
       tap((page:number)=>{
           this.changeVisiblePages(page)
+          this.pageChange.emit(page)
       }),
       takeUntilDestroyed(),
     ).subscribe()
   }
 
-  onPageChange(event:any){
-    //TODO: re-fetch ingredients from api
-  }
 
   changeVisiblePages(page: number): void {
     if (page === this.visiblePages()[this.visiblePages().length - 1]) {
