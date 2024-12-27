@@ -1,5 +1,8 @@
 <ul role="list" class="basis-1/2 divide-y divide-gray-100">
-  @for (ingredient of (ingredients);track ingredient){
+  @for(ingredient of (ingredients ?? []);track ingredient){
+    <li>
     <app-ingredient-item [ingredient]="ingredient"></app-ingredient-item>
+    </li>
   }
+  <app-paginator [visiblePages]="visiblePages()" [totalPages]="totalPages"></app-paginator>
 </ul>

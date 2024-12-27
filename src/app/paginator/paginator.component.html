@@ -1,0 +1,33 @@
+  @if(selectedPage$|async;as currentPage){
+    <div class="flex">
+    <button
+      class="flex items-center justify-center hover:bg-secondary  px-4 h-10 ms-0  border border-e-0 border-300 rounded-s-lg disabled:cursor-not-allowed"
+      (click)="onClick(currentPage-1)"
+      [disabled]="currentPage==1"
+    >
+      Prev
+    </button>
+
+    <ul class="flex">
+      @for (page of visiblePages;track page){
+        <li
+          [ngClass]="page == currentPage ? 'active' : ''"
+          class="flex items-center justify-center  hover:bg-secondary  px-4 h-10 ms-0 border border-e-0 border-300 text-center "
+          (click)="onClick(page)"
+        >
+        {{page}}
+        </li>
+      }
+    </ul>
+    <button
+      class="flex items-center justify-center hover:bg-secondary  px-4 h-10 ms-0  border  border-300 rounded-e-lg disabled:cursor-not-allowed"
+      (click)="onClick(currentPage+1)"
+      [disabled]="currentPage==totalPages"
+    >
+    Next
+    </button>
+    </div>
+  }
+
+
+
