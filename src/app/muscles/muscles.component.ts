@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {Observable} from "rxjs";
 import {Muscle} from "../model/muscle";
-import {RoutinesService} from "../routines.service";
+import {RoutinesService} from "../services/routines.service";
 import {API} from "../../config/api.config";
 import {AsyncPipe, NgOptimizedImage} from "@angular/common";
 

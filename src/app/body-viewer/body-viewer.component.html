@@ -1,0 +1,8 @@
+<div class="canvas-container">
+  <canvas #canvas3d></canvas>
+  @if (hoveredPartName) {
+    <div class="hover-label" [style.top.px]="tooltipPosition.y"
+         [style.left.px]="tooltipPosition.x">{{ hoveredPartName }}
+    </div>
+  }
+</div>
