@@ -18,7 +18,7 @@ export class BodyViewerComponent implements OnInit, OnDestroy {
 
   @ViewChild('canvas3d', {static: true}) canvasRef!: ElementRef<HTMLCanvasElement>;
   @Input() width: number = window.innerWidth;
-  @Input() backgroundColor: Color = new THREE.Color(0xcccccc);
+  @Input() backgroundColor: Color = new THREE.Color('white');
   @Input() height: number = window.innerHeight;
 
   public tooltipPosition = {x: 0, y: 0};
