@@ -1,9 +1,0 @@
-.canvas-container {
-  position: relative;
-  display: inline-block;
-}
-
-.canvas-container .hover-label {
-  position: absolute;
-  pointer-events: none;
-}
