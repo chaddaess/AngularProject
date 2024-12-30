@@ -22,7 +22,7 @@ export class BodyViewerComponent implements OnInit, OnDestroy {
   @Input() height: number = window.innerHeight;
 
   public tooltipPosition = {x: 0, y: 0};
-  public hoveredPartName: Muscle | null = null;
+  public hoveredPart: Muscle | null = null;
   private renderer!: THREE.WebGLRenderer;
   private scene = new THREE.Scene();
   private camera!: THREE.PerspectiveCamera;
@@ -40,13 +40,10 @@ export class BodyViewerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initScene();
     this.loadValidMuscleNames();
-    this.renderer.domElement.addEventListener('mousemove', this.onPointerMove.bind(this), false);
     this.animate();
   }
 
   ngOnDestroy() {
-    // Clean up the event listener
-    this.renderer.domElement.removeEventListener('mousemove', this.onPointerMove);
     cancelAnimationFrame(this.animationFrameId);
     if (this.renderer) {
       this.renderer.dispose();
@@ -113,7 +110,7 @@ export class BodyViewerComponent implements OnInit, OnDestroy {
     });
   }
 
-  private onPointerMove(event: MouseEvent) {
+  protected onPointerMove(event: MouseEvent) {
     const rect = this.renderer.domElement.getBoundingClientRect();
 
     this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -135,7 +132,7 @@ export class BodyViewerComponent implements OnInit, OnDestroy {
 
         if (muscle) {
           // Store it in a public property if you want to use it in your UI
-          this.hoveredPartName = muscle;
+          this.hoveredPart = muscle;
 
           // If new hovered mesh, unhighlight old and highlight this one
           if (this.hoveredMesh !== firstHit) {
@@ -167,6 +164,6 @@ export class BodyViewerComponent implements OnInit, OnDestroy {
     }
     this.hoveredMesh = null;
     this.originalMaterial = null;
-    this.hoveredPartName = null;
+    this.hoveredPart = null;
   }
 }
