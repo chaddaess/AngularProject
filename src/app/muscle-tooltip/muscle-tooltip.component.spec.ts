@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MusclesComponent } from './muscles.component';
+import { MuscleTooltipComponent } from './muscle-tooltip.component';
 
-describe('MusclesComponent', () => {
-  let component: MusclesComponent;
-  let fixture: ComponentFixture<MusclesComponent>;
+describe('MuscleTooltipComponent', () => {
+  let component: MuscleTooltipComponent;
+  let fixture: ComponentFixture<MuscleTooltipComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MusclesComponent]
+      imports: [MuscleTooltipComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(MusclesComponent);
+    fixture = TestBed.createComponent(MuscleTooltipComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
