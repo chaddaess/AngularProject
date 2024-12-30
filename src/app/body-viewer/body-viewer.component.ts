@@ -50,6 +50,50 @@ export class BodyViewerComponent implements OnInit, OnDestroy {
     }
   }
 
+  protected onPointerMove(event: MouseEvent) {
+    const rect = this.renderer.domElement.getBoundingClientRect();
+
+    this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+    this.raycaster.setFromCamera(this.mouse, this.camera);
+    const intersects = this.raycaster.intersectObjects(this.scene.children, true);
+
+    if (intersects.length > 0) {
+      const firstHit = intersects[0].object;
+
+      this.tooltipPosition.x = event.clientX - rect.left + 10;
+      this.tooltipPosition.y = event.clientY - rect.top + 10;
+
+      if (this.muscleMap.has(firstHit.name)) {
+        const muscle = this.muscleMap.get(firstHit.name);
+
+        if (muscle) {
+          this.hoveredPart = muscle;
+
+          // If new hovered mesh, unhighlight old and highlight this one
+          if (this.hoveredMesh !== firstHit) {
+            this.clearHover();
+            this.hoveredMesh = firstHit;
+
+            if ((firstHit as THREE.Mesh).material) {
+              this.originalMaterial = (firstHit as THREE.Mesh).material as THREE.Material;
+
+              const highlightMaterial = this.originalMaterial.clone() as THREE.MeshStandardMaterial;
+              highlightMaterial.color = this.hoverColor;
+              (this.hoveredMesh as THREE.Mesh).material = highlightMaterial;
+            }
+          }
+        }
+      } else {
+        // Not a recognized muscle
+        this.clearHover();
+      }
+    } else {
+      this.clearHover();
+    }
+  }
+
   private initScene() {
     const canvas = this.canvasRef.nativeElement;
 
@@ -108,54 +152,6 @@ export class BodyViewerComponent implements OnInit, OnDestroy {
         });
       }, error: err => console.error('Could not load muscle list', err)
     });
-  }
-
-  protected onPointerMove(event: MouseEvent) {
-    const rect = this.renderer.domElement.getBoundingClientRect();
-
-    this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-    this.raycaster.setFromCamera(this.mouse, this.camera);
-    const intersects = this.raycaster.intersectObjects(this.scene.children, true);
-
-    if (intersects.length > 0) {
-      const firstHit = intersects[0].object;
-
-      this.tooltipPosition.x = event.clientX - rect.left + 10;
-      this.tooltipPosition.y = event.clientY - rect.top + 10;
-
-      // Check if muscle name is recognized in your Map
-      if (this.muscleMap.has(firstHit.name)) {
-        // Fetch the entire Muscle object
-        const muscle = this.muscleMap.get(firstHit.name);
-
-        if (muscle) {
-          // Store it in a public property if you want to use it in your UI
-          this.hoveredPart = muscle;
-
-          // If new hovered mesh, unhighlight old and highlight this one
-          if (this.hoveredMesh !== firstHit) {
-            this.clearHover();
-            this.hoveredMesh = firstHit;
-
-            // Highlight if it's a mesh with a material
-            if ((firstHit as THREE.Mesh).material) {
-              this.originalMaterial = (firstHit as THREE.Mesh).material as THREE.Material;
-
-              const highlightMaterial = this.originalMaterial.clone() as THREE.MeshStandardMaterial;
-              highlightMaterial.color = this.hoverColor;
-              (this.hoveredMesh as THREE.Mesh).material = highlightMaterial;
-            }
-          }
-        }
-      } else {
-        // Not a recognized muscle
-        this.clearHover();
-      }
-    } else {
-      this.clearHover();
-    }
   }
 
   private clearHover() {
