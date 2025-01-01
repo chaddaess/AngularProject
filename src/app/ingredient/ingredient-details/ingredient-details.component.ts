@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {BehaviorSubject, catchError, EMPTY, finalize, Observable, switchMap, tap} from "rxjs";
 import {IngredientService} from "../ingredient.service";
@@ -22,14 +22,14 @@ export class IngredientDetailsComponent {
   router=inject(Router)
   ingredientService=inject(IngredientService)
   ingredientDetails$:Observable<IngredientDetails>
-  isLoading$=new BehaviorSubject<boolean>(false)
+  isLoading=signal(false)
   constructor() {
     this.ingredientDetails$=this.activatedRoute.params.pipe(
-      tap(()=>{this.isLoading$.next(true)}),
+      tap(()=>{this.isLoading.set(true)}),
       switchMap((params)=>{
         return this.ingredientService.getIngredientDetails(+params['id']).pipe(
           catchError(()=>(EMPTY)),
-          finalize(()=>{this.isLoading$.next(false)})
+          finalize(()=>{this.isLoading.set(false)})
         )
       })
     )
