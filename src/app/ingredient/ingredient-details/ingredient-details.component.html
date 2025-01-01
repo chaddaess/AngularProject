@@ -1,6 +1,11 @@
-@if(ingredientDetails$|async ;as details){
-
-  <div class="flex flex-col items-center max-w-md text-center  ">
+<div class="flex flex-col items-center">
+@if (isLoading$|async;as isLoading){
+  <div class="">
+    <img src="assets/spinner.gif" class="w-24 h-24">
+  </div>
+}
+@if(!(isLoading$ | async)&&(ingredientDetails$|async);as details){
+  <div class="flex flex-col items-center max-w-md text-center" >
     <div>
       <h2>{{details.name}}</h2>
       <hr>
@@ -59,8 +64,9 @@
       </table>
     </div>
   </div>
-
 }
+</div>
+
 
 
 
