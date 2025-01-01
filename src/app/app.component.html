@@ -1,9 +1,7 @@
-@if (isLoading) {
-  <div class="loading">
-    <mat-progress-bar mode="indeterminate" color="warn" class=""></mat-progress-bar>
-  </div>
+@if (!isLoading) {
+  <app-loader></app-loader>
 } @else {
-  <div class="container mx-auto ">
+  <div class="container mx-auto border-black ">
     <router-outlet></router-outlet>
   </div>
 
