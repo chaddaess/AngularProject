@@ -1,0 +1,18 @@
+<app-list
+  title="Catégorie"
+  [items]= categoriesList
+  (toggleItem)="onItemToggle($event, categoriesList)">
+</app-list> 
+
+<br><br>
+<app-list
+title="Equipement"
+  [items]=equipmentsList
+  (toggleItem)="onItemToggle($event, equipmentsList)"
+></app-list>
+ <br><br>
+<app-list
+title="Muscles"
+  [items]=musclesList
+  (toggleItem)="onItemToggle($event,musclesList)"
+></app-list>

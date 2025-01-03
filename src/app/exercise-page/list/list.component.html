@@ -1,0 +1,20 @@
+<div class="p-4 max-h-[350px] overflow-y-auto rounded-lg border border-gray-300 shadow-sm " style="width:30%">
+    <div class="sticky top-0 bg-white z-20">
+        <h2 class="text-lg font-bold mb-4">{{title}}</h2>
+      </div>
+    <ul class="relative">
+        @for (item of items; track item.name){
+        <li
+        class="flex items-center px-4 py-3 mb-2 rounded-lg cursor-pointer bg-gray-100 hover:bg-gray-200 transition"
+        (click)="onToggle(item.name)"
+      >
+        <input
+          type="checkbox"
+          class="mr-3 cursor-pointer"
+          [checked]="item.selected"
+          (click)="$event.stopPropagation()" /><!-- Prevent parent click -->
+        
+        <span class="text-sm">{{ item.name }}</span>
+      </li>}
+    </ul>
+  </div>
