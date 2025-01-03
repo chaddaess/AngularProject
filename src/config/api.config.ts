@@ -3,5 +3,6 @@ export const API = {
 'ingredient':'https://wger.de/api/v2/ingredient',
 'category':'https://wger.de/api/v2/exercisecategory',
 'equipment':'https://wger.de/api/v2/equipment',
-'muscle': 'https://wger.de/api/v2/muscle'
+'muscle': 'https://wger.de/api/v2/muscle',
+'exercisebaseinfo':'https://wger.de/api/v2/exercisebaseinfo',
 };

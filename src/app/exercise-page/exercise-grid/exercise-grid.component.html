@@ -1,1 +1,5 @@
-<p>exercise-grid works!</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    @for (exercise of exercises; track exercise.name){
+    <app-exercise-card [exercise]="exercise"></app-exercise-card>}
+  </div>
+  

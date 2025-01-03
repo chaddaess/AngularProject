@@ -24,4 +24,11 @@ export class ExerciseService {
       map((response) => response.results.map((item: any) => item.name))
     );
   }
+  getExercises(): Observable<string[]> {
+    return this.http.get<any>(`${API.exercisebaseinfo}?limit=5`).pipe(
+      map((response) =>{
+        console.log(response.results);
+        return response.results})
+    );
+  }
 }

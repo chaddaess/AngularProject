@@ -1,18 +1,26 @@
-<app-list
-  title="Catégorie"
-  [items]= categoriesList
-  (toggleItem)="onItemToggle($event, categoriesList)">
-</app-list> 
+<div style="display:flex">
+  <div style="width:25%">
+    <app-list
+      title="Catégorie"
+      [items]= categoriesList
+      (toggleItem)="onItemToggle($event, categoriesList)">
+    </app-list> 
 
-<br><br>
-<app-list
-title="Equipement"
-  [items]=equipmentsList
-  (toggleItem)="onItemToggle($event, equipmentsList)"
-></app-list>
- <br><br>
-<app-list
-title="Muscles"
-  [items]=musclesList
-  (toggleItem)="onItemToggle($event,musclesList)"
-></app-list>
+    <br><br>
+    <app-list
+    title="Equipement"
+      [items]=equipmentsList
+      (toggleItem)="onItemToggle($event, equipmentsList)"
+    ></app-list>
+    <br><br>
+    <app-list
+    title="Muscles"
+      [items]=musclesList
+      (toggleItem)="onItemToggle($event,musclesList)"
+    ></app-list>
+</div>
+<div>
+  <app-exercise-grid [exercises]="exercisesList"></app-exercise-grid>
+</div>
+
+</div>
