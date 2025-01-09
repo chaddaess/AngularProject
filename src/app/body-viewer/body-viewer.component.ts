@@ -45,9 +45,7 @@ export class BodyViewerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     cancelAnimationFrame(this.animationFrameId);
-    if (this.renderer) {
-      this.renderer.dispose();
-    }
+    this.renderer?.dispose();
   }
 
   protected onPointerMove(event: MouseEvent) {
@@ -97,61 +95,71 @@ export class BodyViewerComponent implements OnInit, OnDestroy {
   private initScene() {
     const canvas = this.canvasRef.nativeElement;
 
-    this.renderer = new THREE.WebGLRenderer({canvas, antialias: true});
+    this.renderer = new THREE.WebGLRenderer({
+      canvas, antialias: true, powerPreference: 'high-performance'
+    });
     this.renderer.setSize(this.width, this.height);
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+
     this.scene.background = this.backgroundColor;
 
     // Create camera
     this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 1000);
     this.camera.position.set(0, 1.6, 3);
+    this.camera.updateProjectionMatrix();
 
     // Create controls
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = true;  // smoother rotation
     this.controls.dampingFactor = 0.05;
 
-    // Add basic lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    this.scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-    directionalLight.position.set(10, 10, 10);
-    this.scene.add(directionalLight);
+    this.setupLighting();
 
     this.loadHumanModel();
+  }
+
+  private setupLighting(): void {
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.8);
+
+    directionalLight.position.set(10, 10, 10);
+    directionalLight.castShadow = true;
+
+    this.scene.add(ambientLight, directionalLight, hemisphereLight);
   }
 
   private loadHumanModel() {
     const loader = new GLTFLoader();
 
-    loader.load('assets/models/muscles.glb', (gltf: { scene: any; }) => {
+    loader.load('assets/models/muscles.glb', (gltf) => {
       // On load complete
-      const humanScene = gltf.scene;
-      this.scene.add(humanScene);
+      this.scene.add(gltf.scene);
     }, (xhr: { loaded: number; total: number; }) => {
       // Called while loading is progressing
       console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-    }, (error: any) => {
+    }, (error) => {
       console.error('An error happened during model loading:', error);
     });
   }
 
   private animate() {
     this.animationFrameId = requestAnimationFrame(() => this.animate());
-    this.controls.update();
-    this.renderer.render(this.scene, this.camera);
+    this.controls?.update();
+    this.renderer?.render(this.scene, this.camera);
   }
 
   private loadValidMuscleNames() {
-    this.routinesService.getMuscles().subscribe({
-      next: (muscles: Muscle[]) => {
-        muscles.forEach(m => {
-          // Convert spaces to underscores, e.g. "Triceps brachii" -> "Triceps_brachii"
-          const nameWithUnderscores = m.name.replace(/\s+/g, '_');
-          this.muscleMap.set(nameWithUnderscores, m);
-        });
-      }, error: err => console.error('Could not load muscle list', err)
-    });
+    this.routinesService.getMuscles()
+      .subscribe({
+        next: (muscles: Muscle[]) => {
+          muscles.forEach(muscle => {
+            // Convert spaces to underscores, e.g. "Triceps brachii" -> "Triceps_brachii"
+            const key = muscle.name.replace(/\s+/g, '_');
+            this.muscleMap.set(key, muscle);
+          });
+        }, error: err => console.error('Could not load muscle list:', err)
+      });
   }
 
   private clearHover() {
