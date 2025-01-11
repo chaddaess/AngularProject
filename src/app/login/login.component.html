@@ -1,12 +1,12 @@
 <section class="bg-background-dark">
-  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-    <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-text-light dark:text-text-light">
+  <div class="flex flex-col items-center justify-center ">
+    <a href="#" class="flex  mt-5 items-center mb-6 text-2xl font-semibold text-text-light dark:text-text-light">
       <img class="w-8 h-8 mr-2" src="assets/logo.png" alt="logo">
       {{ UI_TEXTS.APP_TITLE }}
     </a>
     <div class="w-full bg-background-light rounded-lg shadow dark:border dark:border-secondary-dark md:mt-0 sm:max-w-md xl:p-0 dark:bg-background-dark">
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-        <h1 class="text-xl font-bold leading-tight tracking-tight text-text-light md:text-2xl dark:text-text-light">
+        <h1 class="text-xl font-bold leading-tight tracking-tight text-text-light md:text-xl dark:text-text-light">
           {{ UI_TEXTS.SIGN_IN_TITLE }}
         </h1>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6">
@@ -27,7 +27,7 @@
           <div>
             <label for="username" class="block mb-2 text-sm font-medium text-text-light dark:text-text-light">{{ UI_TEXTS.USERNAME_LABEL }}</label>
             <input formControlName="username" id="username" class="bg-secondary-light border border-secondary DEFAULT text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark dark:placeholder-placeholderDark dark:text-text-light dark:focus:ring-primary-focus dark:focus:border-primary-focus" placeholder="username">
-           @if(username?.invalid && username?.touched) {
+         @if(username?.invalid && username?.touched) {
              <div class="text-red-500 text-sm">
                @if(username?.errors?.['required']) {
                  <small>{{ UI_TEXTS.USERNAME_REQUIRED_ERROR }}</small>
@@ -46,24 +46,15 @@
               </div>
             }
           </div>
-          <div class="flex items-center justify-between">
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-secondary DEFAULT rounded bg-secondary-light focus:ring-3 focus:ring-primary-focus dark:bg-secondary-dark dark:border-secondary-dark dark:focus:ring-primary-focus dark:ring-offset-background-dark">
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="remember" class="text-secondary-dark dark:text-text-light">Remember me</label>
-              </div>
-            </div>
-          </div>
+
           <button type="submit" (click)="onSubmit()"  class="w-full text-text-light bg-primary DEFAULT hover:bg-primary-hover focus:ring-4 focus:outline-none focus:ring-primary-focus font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary DEFAULT dark:hover:bg-primary-hover dark:focus:ring-primary-focus">
             Sign in
           </button>
-          <p class="text-sm font-light text-secondary-dark dark:text-text-light">
-            {{ UI_TEXTS.CREATE_ACCOUNT_PROMPT }} <a href="#" class="font-medium text-primary DEFAULT hover:underline dark:text-primary-focus">{{ UI_TEXTS.SIGN_UP_TITLE }}</a>
-          </p>
         </form>
       </div>
     </div>
+    <p class="text-sm font-light text-secondary-dark dark:text-text-light mb-5">
+      {{ UI_TEXTS.CREATE_ACCOUNT_PROMPT }} <a href="#" class="font-medium text-primary DEFAULT hover:underline dark:text-primary-focus">{{ UI_TEXTS.SIGN_UP_TITLE }}</a>
+    </p>
   </div>
 </section>
