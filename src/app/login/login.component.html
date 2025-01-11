@@ -9,25 +9,27 @@
         <h1 class="text-xl font-bold leading-tight tracking-tight text-text-light md:text-2xl dark:text-text-light">
           {{ UI_TEXTS.SIGN_IN_TITLE }}
         </h1>
-        <!-- Bind the form to the FormGroup instance -->
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6">
           <div>
             <label for="email" class="block mb-2 text-sm font-medium text-text-light dark:text-text-light">{{ UI_TEXTS.EMAIL_LABEL }}</label>
-            <!-- Bind the input field to the email FormControl -->
             <input type="email" formControlName="email" id="email" class="bg-secondary-light border border-secondary DEFAULT text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark dark:placeholder-placeholderDark dark:text-text-light dark:focus:ring-primary-focus dark:focus:border-primary-focus" placeholder="name@company.com">
-            <!-- Display validation errors -->
-            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-red-500 text-sm">
-              <small *ngIf="loginForm.get('email')?.errors?.['required']">{{ UI_TEXTS.EMAIL_REQUIRED_ERROR }}</small>
-              <small *ngIf="loginForm.get('email')?.errors?.['email']">{{ UI_TEXTS.EMAIL_INVALID_ERROR }}</small>
+            <div *ngIf="email?.invalid && email?.touched" class="text-red-500 text-sm">
+              <small *ngIf="email?.errors?.['required']">{{ UI_TEXTS.EMAIL_REQUIRED_ERROR }}</small>
+              <small *ngIf="email?.errors?.['email']">{{ UI_TEXTS.EMAIL_INVALID_ERROR }}</small>
+            </div>
+          </div>
+          <div>
+            <label for="username" class="block mb-2 text-sm font-medium text-text-light dark:text-text-light">{{ UI_TEXTS.USERNAME_LABEL }}</label>
+            <input type="username" formControlName="email" id="username" class="bg-secondary-light border border-secondary DEFAULT text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark dark:placeholder-placeholderDark dark:text-text-light dark:focus:ring-primary-focus dark:focus:border-primary-focus" placeholder="username">
+            <div *ngIf="username?.invalid && username?.touched" class="text-red-500 text-sm">
+              <small *ngIf="username?.errors?.['required']">{{ UI_TEXTS.USERNAME_REQUIRED_ERROR }}</small>
             </div>
           </div>
           <div>
             <label for="password" class="block mb-2 text-sm font-medium text-text-light">{{ UI_TEXTS.PASSWORD_LABEL }}</label>
-            <!-- Bind the input field to the password FormControl -->
             <input type="password" formControlName="password" id="password" placeholder="••••••••" class="bg-secondary-light border border-secondary DEFAULT rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark text-text-light ">
-            <!-- Display validation errors -->
-            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-500 text-sm">
-              <small *ngIf="loginForm.get('password')?.errors?.['required']">{{ UI_TEXTS.PASSWORD_REQUIRED_ERROR }}</small>
+            <div *ngIf="password?.invalid && password?.touched" class="text-red-500 text-sm">
+              <small *ngIf="password?.errors?.['required']">{{ UI_TEXTS.PASSWORD_REQUIRED_ERROR }}</small>
             </div>
           </div>
           <div class="flex items-center justify-between">
