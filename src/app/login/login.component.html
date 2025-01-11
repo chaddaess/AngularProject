@@ -13,24 +13,38 @@
           <div>
             <label for="email" class="block mb-2 text-sm font-medium text-text-light dark:text-text-light">{{ UI_TEXTS.EMAIL_LABEL }}</label>
             <input type="email" formControlName="email" id="email" class="bg-secondary-light border border-secondary DEFAULT text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark dark:placeholder-placeholderDark dark:text-text-light dark:focus:ring-primary-focus dark:focus:border-primary-focus" placeholder="name@company.com">
-            <div *ngIf="email?.invalid && email?.touched" class="text-red-500 text-sm">
-              <small *ngIf="email?.errors?.['required']">{{ UI_TEXTS.EMAIL_REQUIRED_ERROR }}</small>
-              <small *ngIf="email?.errors?.['email']">{{ UI_TEXTS.EMAIL_INVALID_ERROR }}</small>
-            </div>
+            @if (email?.invalid && email?.touched) {
+              <div class="text-red-500 text-sm">
+                @if (email?.errors?.['required']) {
+                  <small>{{ UI_TEXTS.EMAIL_REQUIRED_ERROR }}</small>
+                }
+                @if (email?.errors?.['email']) {
+                  <small>{{ UI_TEXTS.EMAIL_INVALID_ERROR }}</small>
+                }
+              </div>
+            }
           </div>
           <div>
             <label for="username" class="block mb-2 text-sm font-medium text-text-light dark:text-text-light">{{ UI_TEXTS.USERNAME_LABEL }}</label>
-            <input type="username" formControlName="email" id="username" class="bg-secondary-light border border-secondary DEFAULT text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark dark:placeholder-placeholderDark dark:text-text-light dark:focus:ring-primary-focus dark:focus:border-primary-focus" placeholder="username">
-            <div *ngIf="username?.invalid && username?.touched" class="text-red-500 text-sm">
-              <small *ngIf="username?.errors?.['required']">{{ UI_TEXTS.USERNAME_REQUIRED_ERROR }}</small>
-            </div>
+            <input formControlName="username" id="username" class="bg-secondary-light border border-secondary DEFAULT text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark dark:placeholder-placeholderDark dark:text-text-light dark:focus:ring-primary-focus dark:focus:border-primary-focus" placeholder="username">
+           @if(username?.invalid && username?.touched) {
+             <div class="text-red-500 text-sm">
+               @if(username?.errors?.['required']) {
+                 <small>{{ UI_TEXTS.USERNAME_REQUIRED_ERROR }}</small>
+               }
+             </div>
+           }
           </div>
           <div>
             <label for="password" class="block mb-2 text-sm font-medium text-text-light">{{ UI_TEXTS.PASSWORD_LABEL }}</label>
             <input type="password" formControlName="password" id="password" placeholder="••••••••" class="bg-secondary-light border border-secondary DEFAULT rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark text-text-light ">
-            <div *ngIf="password?.invalid && password?.touched" class="text-red-500 text-sm">
-              <small *ngIf="password?.errors?.['required']">{{ UI_TEXTS.PASSWORD_REQUIRED_ERROR }}</small>
-            </div>
+            @if(password?.invalid && password?.touched) {
+              <div class="text-red-500 text-sm">
+                @if(password?.errors?.['required']) {
+                  <small>{{ UI_TEXTS.PASSWORD_REQUIRED_ERROR }}</small>
+                }
+              </div>
+            }
           </div>
           <div class="flex items-center justify-between">
             <div class="flex items-start">
@@ -41,9 +55,8 @@
                 <label for="remember" class="text-secondary-dark dark:text-text-light">Remember me</label>
               </div>
             </div>
-            <a href="#" class="text-sm font-medium text-primary DEFAULT hover:underline dark:text-primary-focus">{{ UI_TEXTS.FORGOT_PASSWORD_PROMPT }}</a>
           </div>
-          <button type="submit" [disabled]="loginForm.invalid" class="w-full text-text-light bg-primary DEFAULT hover:bg-primary-hover focus:ring-4 focus:outline-none focus:ring-primary-focus font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary DEFAULT dark:hover:bg-primary-hover dark:focus:ring-primary-focus">
+          <button type="submit" (click)="onSubmit()"  class="w-full text-text-light bg-primary DEFAULT hover:bg-primary-hover focus:ring-4 focus:outline-none focus:ring-primary-focus font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary DEFAULT dark:hover:bg-primary-hover dark:focus:ring-primary-focus">
             Sign in
           </button>
           <p class="text-sm font-light text-secondary-dark dark:text-text-light">
