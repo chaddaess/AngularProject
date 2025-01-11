@@ -17,8 +17,8 @@ export class LoginComponent {
   //authService = inject(AuthService);
   router = inject(Router);
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
     username: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required])
   })
   constructor( private authService : AuthService
@@ -37,6 +37,8 @@ export class LoginComponent {
   }
 
   onSubmit() {
+    console.log(this.loginForm.value);
+
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
      this.authService.login(this.loginForm.value as CredentialsDto)

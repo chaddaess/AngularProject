@@ -6,7 +6,5 @@ import {HttpClientModule} from "@angular/common/http";
 export const routes: Routes = [
   {
     path: 'login', component: LoginComponent
-  },
-  { path: '', component: AppComponent },
-
+  }
 ];
