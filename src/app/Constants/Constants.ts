@@ -12,7 +12,6 @@ export const UI_TEXTS = {
   EMAIL_INVALID_ERROR: "Enter a valid email.",
   PASSWORD_LABEL: "Password",
   PASSWORD_REQUIRED_ERROR: "Password is required.",
-  FORGOT_PASSWORD_PROMPT: "Forgot password?",
   USERNAME_LABEL: "Username",
   USERNAME_REQUIRED_ERROR: "Username is required.",
 };
