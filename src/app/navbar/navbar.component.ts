@@ -1,6 +1,8 @@
 import {Component, inject} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
-import {UI_TEXTS} from "../Constants/Constants";
+import {NAVBAR_TEXTS} from "../Constants/Constants";
+import {AuthService} from "../auth/auth.service";
+import {APP_ROUTES} from "../../config/routes.config";
 
 @Component({
   selector: 'app-navbar',
@@ -14,9 +16,12 @@ import {UI_TEXTS} from "../Constants/Constants";
 })
 export class NavbarComponent {
   private router = inject(Router);
-  constructor(...args: unknown[]);
+  constructor(public authService:AuthService) {}
 
-  constructor() {}
+  protected readonly UI_TEXTS = NAVBAR_TEXTS;
 
-  protected readonly UI_TEXTS = UI_TEXTS;
+  logout() {
+    this.authService.logout();
+    this.router.navigate([APP_ROUTES.login]);
+  }
 }

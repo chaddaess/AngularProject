@@ -1,8 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {tap} from "rxjs";
-import {LOGIN_URL} from "../Constants/Constants";
 import {CredentialsDto} from "./dto/credentials.dto";
+import {API} from "../../config/api.config";
 @Injectable({
   providedIn:"root"
 })
@@ -12,7 +12,7 @@ export class AuthService {
 ) { }
 
   login(data: CredentialsDto) {
-    return this.httpClient.post(LOGIN_URL, data)
+    return this.httpClient.post(API.login, data)
       .pipe(tap((result) => {
         localStorage.setItem('authUser', JSON.stringify(result));
       }));

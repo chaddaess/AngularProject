@@ -1,69 +1,27 @@
 <nav class="bg-primary-red text-white">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+    <a [routerLink]="['']" class="flex items-center space-x-3 rtl:space-x-reverse">
       <img src="assets/logo.png" class="h-8" alt="Logo" />
       <span class="self-center text-2xl font-semibold whitespace-nowrap">{{UI_TEXTS.APP_TITLE}}</span>
     </a>
-    <div class="hidden w-full md:block md:w-auto" id="navbar-multi-level">
-      <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
-        <li>
-          <a href="#" class="block py-2 px-3 text-white rounded md:bg-transparent md:p-0" aria-current="page">Suivi poids</a>
-        </li>
-        <li>
-          <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 md:hover:bg-transparent md:border-0 md:p-0 md:w-auto">
-            Nutrition
-            <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-            </svg>
-          </button>
-          <!-- Dropdown menu -->
-          <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y rounded-lg shadow w-44">
-            <ul class="py-2 text-sm" aria-labelledby="dropdownLargeButton">
-              <li>
-                <a href="#" class="block px-4 py-2">Dashboard</a>
-              </li>
-              <li aria-labelledby="dropdownNavbarLink">
-                <button id="doubleDropdownButton" data-dropdown-toggle="doubleDropdown" data-dropdown-placement="right-start" type="button" class="flex items-center justify-between w-full px-4 py-2">Routine
-                  <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                  </svg>
-                </button>
-                <div id="doubleDropdown" class="z-10 hidden bg-white divide-y rounded-lg shadow w-44">
-                  <ul class="py-2 text-sm" aria-labelledby="doubleDropdownButton">
-                    <li>
-                      <a href="#" class="block px-4 py-2">Exercices</a>
-                    </li>
-                    <li>
-                      <a href="#" class="block px-4 py-2">My downloads</a>
-                    </li>
-                    <li>
-                      <a href="#" class="block px-4 py-2">Billing</a>
-                    </li>
-                    <li>
-                      <a href="#" class="block px-4 py-2">Rewards</a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li>
-                <a href="#" class="block px-4 py-2">Earnings</a>
-              </li>
-            </ul>
-            <div class="py-1">
-              <a href="#" class="block px-4 py-2 text-sm">Sign out</a>
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">Routine</a>
-        </li>
-        <li>
-          <a href="#" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">IMC</a>
-        </li>
-        <li>
-          <a [routerLink]="['login']" class="nav-link block py-2 px-3 rounded md:border-0 md:p-0">Login</a>
-        </li>
-      </ul>
+    <div class="hidden w-full md:block md:w-auto" >
+      <div class="flex flex-col font-medium p-4 md:p-0 mt-4 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
+          <a [routerLink]="['']" class="block py-2 px-3 text-white rounded md:bg-transparent md:p-0" aria-current="page">{{UI_TEXTS.WEIGHT}}</a>
+
+          <a [routerLink]="['']" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{ UI_TEXTS.ROUTINES }}</a>
+
+          <a [routerLink]="['']" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{UI_TEXTS.PREFERENCES}}</a>
+
+        @if(authService.isLoggedIn())  {
+          <a [routerLink]="['']" (click)="logout()" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">
+            {{UI_TEXTS.LOGOUT}}
+          </a>
+        } @else {
+          <a [routerLink]="['']" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">
+            {{UI_TEXTS.LOGIN}}
+          </a>
+        }
+      </div>
     </div>
   </div>
 </nav>
