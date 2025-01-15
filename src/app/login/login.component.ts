@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import {AuthService} from "../auth/auth.service";
 import {Router, RouterModule} from "@angular/router";
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {UI_TEXTS} from "../Constants/Constants";
+import {LOGIN_PAGE_TEXTS} from "../Constants/Constants";
 import {CredentialsDto} from "../auth/dto/credentials.dto";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 
@@ -50,5 +50,5 @@ export class LoginComponent {
         });
     }
   }
-  protected readonly UI_TEXTS = UI_TEXTS;
+  protected readonly LOGIN_PAGE_TEXTS = LOGIN_PAGE_TEXTS;
 }

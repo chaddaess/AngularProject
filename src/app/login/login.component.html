@@ -2,46 +2,46 @@
   <div class="flex flex-col items-center justify-center ">
     <a href="#" class="flex  mt-5 items-center mb-6 text-2xl font-semibold text-text-light dark:text-text-light">
       <img class="w-8 h-8 mr-2" src="assets/logo.png" alt="logo">
-      {{ UI_TEXTS.APP_TITLE }}
+      {{ LOGIN_PAGE_TEXTS.APP_TITLE }}
     </a>
     <div class="w-full bg-background-light rounded-lg shadow dark:border dark:border-secondary-dark md:mt-0 sm:max-w-md xl:p-0 dark:bg-background-dark">
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
         <h1 class="text-xl font-bold leading-tight tracking-tight text-text-light md:text-xl dark:text-text-light">
-          {{ UI_TEXTS.SIGN_IN_TITLE }}
+          {{ LOGIN_PAGE_TEXTS.SIGN_IN_TITLE }}
         </h1>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6">
           <div>
-            <label for="email" class="block mb-2 text-sm font-medium text-text-light dark:text-text-light">{{ UI_TEXTS.EMAIL_LABEL }}</label>
+            <label for="email" class="block mb-2 text-sm font-medium text-text-light dark:text-text-light">{{ LOGIN_PAGE_TEXTS.EMAIL_LABEL }}</label>
             <input type="email" formControlName="email" id="email" class="bg-secondary-light border border-secondary DEFAULT text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark dark:placeholder-placeholderDark dark:text-text-light dark:focus:ring-primary-focus dark:focus:border-primary-focus" placeholder="name@company.com">
             @if (email?.invalid && email?.touched) {
               <div class="text-red-500 text-sm">
                 @if (email?.errors?.['required']) {
-                  <small>{{ UI_TEXTS.EMAIL_REQUIRED_ERROR }}</small>
+                  <small>{{ LOGIN_PAGE_TEXTS.EMAIL_REQUIRED_ERROR }}</small>
                 }
                 @if (email?.errors?.['email']) {
-                  <small>{{ UI_TEXTS.EMAIL_INVALID_ERROR }}</small>
+                  <small>{{ LOGIN_PAGE_TEXTS.EMAIL_INVALID_ERROR }}</small>
                 }
               </div>
             }
           </div>
           <div>
-            <label for="username" class="block mb-2 text-sm font-medium text-text-light dark:text-text-light">{{ UI_TEXTS.USERNAME_LABEL }}</label>
+            <label for="username" class="block mb-2 text-sm font-medium text-text-light dark:text-text-light">{{ LOGIN_PAGE_TEXTS.USERNAME_LABEL }}</label>
             <input formControlName="username" id="username" class="bg-secondary-light border border-secondary DEFAULT text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark dark:placeholder-placeholderDark dark:text-text-light dark:focus:ring-primary-focus dark:focus:border-primary-focus" placeholder="username">
          @if(username?.invalid && username?.touched) {
              <div class="text-red-500 text-sm">
                @if(username?.errors?.['required']) {
-                 <small>{{ UI_TEXTS.USERNAME_REQUIRED_ERROR }}</small>
+                 <small>{{ LOGIN_PAGE_TEXTS.USERNAME_REQUIRED_ERROR }}</small>
                }
              </div>
            }
           </div>
           <div>
-            <label for="password" class="block mb-2 text-sm font-medium text-text-light">{{ UI_TEXTS.PASSWORD_LABEL }}</label>
+            <label for="password" class="block mb-2 text-sm font-medium text-text-light">{{ LOGIN_PAGE_TEXTS.PASSWORD_LABEL }}</label>
             <input type="password" formControlName="password" id="password" placeholder="••••••••" class="bg-secondary-light border border-secondary DEFAULT rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark text-text-light ">
             @if(password?.invalid && password?.touched) {
               <div class="text-red-500 text-sm">
                 @if(password?.errors?.['required']) {
-                  <small>{{ UI_TEXTS.PASSWORD_REQUIRED_ERROR }}</small>
+                  <small>{{ LOGIN_PAGE_TEXTS.PASSWORD_REQUIRED_ERROR }}</small>
                 }
               </div>
             }
@@ -54,7 +54,7 @@
       </div>
     </div>
     <p class="text-sm font-light text-secondary-dark dark:text-text-light mb-5">
-      {{ UI_TEXTS.CREATE_ACCOUNT_PROMPT }} <a href="#" class="font-medium text-primary DEFAULT hover:underline dark:text-primary-focus">{{ UI_TEXTS.SIGN_UP_TITLE }}</a>
+      {{ LOGIN_PAGE_TEXTS.CREATE_ACCOUNT_PROMPT }} <a href="#" class="font-medium text-primary DEFAULT hover:underline dark:text-primary-focus">{{ LOGIN_PAGE_TEXTS.SIGN_UP_TITLE }}</a>
     </p>
   </div>
 </section>
