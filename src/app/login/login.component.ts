@@ -1,10 +1,10 @@
 import {Component, inject} from '@angular/core';
 import {AuthService} from "../auth/auth.service";
 import {Router, RouterModule} from "@angular/router";
-import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {LOGIN_PAGE_TEXTS} from "../Constants/Constants";
 import {CredentialsDto} from "../auth/dto/credentials.dto";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 
 @Component({
   selector: 'app-login',

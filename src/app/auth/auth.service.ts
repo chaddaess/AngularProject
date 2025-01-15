@@ -1,5 +1,5 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 import {tap} from "rxjs";
 import {CredentialsDto} from "./dto/credentials.dto";
 import {API} from "../../config/api.config";
