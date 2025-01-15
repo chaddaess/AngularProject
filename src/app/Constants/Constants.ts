@@ -1,9 +1,12 @@
 export const API_BASE_URL = "https://wger.de";
-export const LOGIN_URL = `${API_BASE_URL}/api/v2/login/`;
-export const REGISTER_URL = `${API_BASE_URL}/api/v2/register/`;
-
-export const UI_TEXTS = {
-  APP_TITLE: "HealthSphere",
+export const APP_TITLE = "HealthSphere";
+  export const API_URLS=
+{
+  LOGIN_URL: `${API_BASE_URL}/api/v2/login/`,
+  REGISTER_URL: `${API_BASE_URL}/api/v2/register/`
+};
+export const LOGIN_PAGE_TEXTS = {
+  APP_TITLE: APP_TITLE,
   SIGN_IN_TITLE: "Sign in to your account",
   SIGN_UP_TITLE: "Sign Up",
   CREATE_ACCOUNT_PROMPT: "Don’t have an account yet?",
@@ -15,3 +18,16 @@ export const UI_TEXTS = {
   USERNAME_LABEL: "Username",
   USERNAME_REQUIRED_ERROR: "Username is required.",
 };
+
+export const NAVBAR_TEXTS = {
+  APP_TITLE: APP_TITLE,
+  NUTRITION: "Nutrition",
+  WEIGHT: "Weight",
+  ROUTINES: "Routines",
+  PREFERENCES: "Preferences",
+  LOGIN: "Login",
+  LOGOUT: "Logout"
+};
+
+
+
