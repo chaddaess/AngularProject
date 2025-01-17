@@ -1,10 +1,11 @@
 import {Component, inject, signal} from '@angular/core';
-import {BehaviorSubject, catchError, finalize, map, Observable, tap} from "rxjs";
+import {BehaviorSubject, catchError, combineLatest, finalize, map, Observable, tap, timeout, timer} from "rxjs";
 import {Ingredient} from "./model/Ingredient";
 import {IngredientService} from "./ingredient.service";
 import {AsyncPipe} from "@angular/common";
 import {ActivatedRoute, Router, RouterOutlet} from "@angular/router";
 import {IngredientListComponent} from "./ingredient-list/ingredient-list.component";
+import {LoadingSpinnerComponent} from "../loading-spinner/loading-spinner.component";
 
 
 @Component({
@@ -13,7 +14,8 @@ import {IngredientListComponent} from "./ingredient-list/ingredient-list.compone
   imports: [
     AsyncPipe,
     RouterOutlet,
-    IngredientListComponent
+    IngredientListComponent,
+    LoadingSpinnerComponent
   ],
   templateUrl: './ingredient.component.html',
   styleUrl: './ingredient.component.css'
@@ -42,17 +44,20 @@ export class IngredientComponent {
   }
   onPageChange(page: number) {
     let offset = (page - 1) * this.limit;
-    this.isLoading.set(true)
-    this.ingredients$ = this.ingredientService.getIngredients({ limit: this.limit, offset: offset }).pipe(
+    const $loaderDelay=timer(500) //loader should appear for at least 500ms to avoid flickering
+    const data$= this.ingredientService.getIngredients({ limit: this.limit, offset: offset }).pipe(
       map((response) => {
         this.total.set(response.total);
         return response.ingredients;
       }),
+    );
+    this.isLoading.set(true)
+    this.ingredients$=combineLatest([data$,$loaderDelay]).pipe(
+      map(([ingredients]) => ingredients),
       finalize(() => {
-        console.log("")
         this.isLoading.set(false);
       })
-    );
+    )
   }
 
 

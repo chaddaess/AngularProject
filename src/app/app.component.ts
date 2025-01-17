@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet} from '@angular/router';
 import {MatProgressBar} from "@angular/material/progress-bar";
-import {LoaderComponent} from "./loader/loader.component";
+import {LoaderComponent} from "./loader-page/loader.component";
 
 @Component({
   selector: 'app-root',
