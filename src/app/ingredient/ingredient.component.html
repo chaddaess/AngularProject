@@ -21,7 +21,7 @@
       />
 
     </div>
-    <ul>
+    <ul role="list" class="divide-y divide-gray-100">
       @for (ingredient of searchIngredients$|async;track ingredient.id){
         <li>
           <app-ingredient-item [ingredient]="ingredient"></app-ingredient-item>

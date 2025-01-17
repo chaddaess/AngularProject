@@ -1,5 +1,8 @@
 @if (isLoading) {
-  <app-loader-page></app-loader-page>
+  @defer (on timer(200ms)){
+    <app-loader-page></app-loader-page>
+  }
+
 } @else {
   <div class="container mx-auto border-black ">
     <router-outlet></router-outlet>
