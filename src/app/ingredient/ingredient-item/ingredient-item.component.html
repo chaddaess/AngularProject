@@ -1,6 +1,10 @@
 <li class="flex justify-between gap-x-6 py-5" (click)="onClick()">
   <div class="flex min-w-0 gap-x-4">
-    <img class="size-12 flex-none rounded-full bg-gray-50" alt="ingredient" src="{{ingredient.image}}">
+    <img class="size-12 flex-none rounded-full bg-gray-50"
+         alt="ingredient"
+         src="{{ingredient.image}}"
+         (error)="onImageLoadingError()"
+    >
     <div class="min-w-0 flex-auto">
       <p class="text-sm/6 font-semibold text-gray-900">{{ingredient.name}}</p>
     </div>

@@ -1,10 +1,11 @@
 import {Component, inject, signal} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {BehaviorSubject, catchError, EMPTY, finalize, Observable, switchMap, tap} from "rxjs";
+import {catchError, EMPTY, finalize, Observable, switchMap, tap} from "rxjs";
 import {IngredientService} from "../ingredient.service";
 import {IngredientDetails} from "../model/IngerdientDetails";
 import {AsyncPipe, NgClass} from "@angular/common";
 import {FalsyValuesPipe} from "../../pipes/falsy-values.pipe";
+import {LoadingSpinnerComponent} from "../../loading-spinner/loading-spinner.component";
 
 @Component({
   selector: 'app-ingredient-details',
@@ -12,7 +13,8 @@ import {FalsyValuesPipe} from "../../pipes/falsy-values.pipe";
   imports: [
     AsyncPipe,
     FalsyValuesPipe,
-    NgClass
+    NgClass,
+    LoadingSpinnerComponent
   ],
   templateUrl: './ingredient-details.component.html',
   styleUrl: './ingredient-details.component.css'

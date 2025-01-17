@@ -16,4 +16,7 @@ export class IngredientItemComponent {
   onClick(){
     this.ingredientService.selectIngredient(this.ingredient)
   }
+  onImageLoadingError(){
+    this.ingredient.image='assets/default-ing.png'
+  }
 }

@@ -1,11 +1,23 @@
 import {Component, inject, signal} from '@angular/core';
-import {BehaviorSubject, catchError, combineLatest, finalize, map, Observable, tap, timeout, timer} from "rxjs";
+import {
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  finalize,
+  map,
+  Observable, of,
+  switchMap,
+  tap,
+  timer
+} from "rxjs";
 import {Ingredient} from "./model/Ingredient";
 import {IngredientService} from "./ingredient.service";
 import {AsyncPipe} from "@angular/common";
 import {ActivatedRoute, Router, RouterOutlet} from "@angular/router";
 import {IngredientListComponent} from "./ingredient-list/ingredient-list.component";
 import {LoadingSpinnerComponent} from "../loading-spinner/loading-spinner.component";
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {IngredientItemComponent} from "./ingredient-item/ingredient-item.component";
 
 
 @Component({
@@ -15,7 +27,9 @@ import {LoadingSpinnerComponent} from "../loading-spinner/loading-spinner.compon
     AsyncPipe,
     RouterOutlet,
     IngredientListComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    ReactiveFormsModule,
+    IngredientItemComponent
   ],
   templateUrl: './ingredient.component.html',
   styleUrl: './ingredient.component.css'
@@ -25,9 +39,12 @@ export class IngredientComponent {
   router=inject(Router)
   activatedRoute=inject(ActivatedRoute)
   ingredients$:Observable<Ingredient[]>;
+  searchIngredients$:Observable<Ingredient[]>
   limit=5; //TODO: find a better placement for this than hardcoding
   total=signal(0);
   isLoading=signal(false)
+  isSearching=signal(false)
+  form=new FormControl<string>('')
   constructor() {
     this.ingredients$ = this.activatedRoute.data.pipe(
       map((data) => (data['ingredients'])),
@@ -41,6 +58,23 @@ export class IngredientComponent {
         this.router.navigate(['ingredients',ingredient.id])
       })
     ).subscribe()
+
+    this.searchIngredients$ = this.form.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap((keyword) => {
+        if(keyword!.trim()==""){
+          return of([])
+        }
+        this.isSearching.set(true)
+        return this.ingredientService.searchIngredients(keyword!).pipe(
+          map((results) => results.slice(0, 5)),
+          finalize(() => {
+            this.isSearching.set(false);
+          })
+        );
+      })
+    );
   }
   onPageChange(page: number) {
     let offset = (page - 1) * this.limit;

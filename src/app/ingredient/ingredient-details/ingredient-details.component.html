@@ -1,7 +1,7 @@
 <div class="flex flex-col items-center">
 @if (isLoading()){
   <div class="">
-    <img src="assets/spinner.gif" class="w-24 h-24">
+    <app-loading-spinner></app-loading-spinner>
   </div>
 }
 @if(!(isLoading())&&(ingredientDetails$|async);as details){
