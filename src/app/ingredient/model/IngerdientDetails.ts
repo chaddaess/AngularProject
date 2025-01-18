@@ -1,4 +1,5 @@
 import {IngredientImage} from "./IngredientImage";
+import {WeightUnits} from "./WeightUnits";
 
 export class IngredientDetails{
   constructor(
@@ -20,25 +21,8 @@ export class IngredientDetails{
     public fat_saturated:string,
     public fiber: string,
     public sodium: string,
-    public weight_units : [
-      {
-        "gram": number,
-        "amount": string,
-        "unit": {
-          "id": number,
-          "full_name": string,
-          "short_name": string,
-          "url": string
-        }
-      }
-    ],
+    public weight_units :WeightUnits[],
     public language: any,
     public image:IngredientImage,
-    public license:any,
-    public license_title: string,
-    public license_object_url: string,
-    public license_author: string,
-    public license_author_url: string,
-    public license_derivative_source_url:string,
   ) {}
 }
