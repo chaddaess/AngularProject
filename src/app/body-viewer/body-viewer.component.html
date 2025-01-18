@@ -1,7 +1,8 @@
 <div class="relative">
-  <canvas #canvas3d (pointermove)="onPointerMove($event)"></canvas>
+  <canvas #canvas3d (pointermove)="onPointerMove($event)" class="touch-none"
+          [class.cursor-pointer]="hoveredPart"></canvas>
   @if (hoveredPart) {
-    <app-muscle-tooltip class="absolute" [style.top.px]="tooltipPosition.y" [style.left.px]="tooltipPosition.x"
+    <app-muscle-tooltip class="absolute pointer-events-none" [style.top.px]="tooltipPosition.y" [style.left.px]="tooltipPosition.x"
                         [muscle]="hoveredPart"></app-muscle-tooltip>
   }
 </div>
