@@ -1,9 +1,9 @@
 import {Component, inject, signal} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {catchError, EMPTY, finalize, Observable, switchMap, tap} from "rxjs";
+import {finalize, Observable, switchMap, tap} from "rxjs";
 import {IngredientService} from "../ingredient.service";
-import {IngredientDetails} from "../model/IngerdientDetails";
-import {AsyncPipe, NgClass} from "@angular/common";
+import {IngredientDetails} from "../model/IngredientDetails";
+import {AsyncPipe} from "@angular/common";
 import {FalsyValuesPipe} from "../../pipes/falsy-values.pipe";
 import {LoadingSpinnerComponent} from "../../loading-spinner/loading-spinner.component";
 
@@ -13,7 +13,6 @@ import {LoadingSpinnerComponent} from "../../loading-spinner/loading-spinner.com
   imports: [
     AsyncPipe,
     FalsyValuesPipe,
-    NgClass,
     LoadingSpinnerComponent
   ],
   templateUrl: './ingredient-details.component.html',
@@ -30,7 +29,6 @@ export class IngredientDetailsComponent {
       tap(()=>{this.isLoading.set(true)}),
       switchMap((params)=>{
         return this.ingredientService.getIngredientDetails(+params['id']).pipe(
-          catchError(()=>(EMPTY)),
           finalize(()=>{this.isLoading.set(false)})
         )
       })

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet} from '@angular/router';
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {LoaderComponent} from "./loader-page/loader.component";
@@ -12,7 +12,8 @@ import {LoaderComponent} from "./loader-page/loader.component";
 })
 export class AppComponent {
   isLoading = false;
-  constructor(private router: Router) {
+  router=inject(Router)
+  constructor() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.isLoading=true

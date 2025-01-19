@@ -1,6 +1,6 @@
 import {Component, inject, Input} from '@angular/core';
 import {PaginatorService} from "./paginator.service";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {AsyncPipe, NgClass} from "@angular/common";
 
 @Component({

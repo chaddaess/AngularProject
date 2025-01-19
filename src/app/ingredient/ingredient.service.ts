@@ -2,10 +2,20 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {API} from "../../config/api.config";
 import {Settings} from "../Settings";
-import {BehaviorSubject, catchError, finalize, forkJoin, map, Observable, of, Subject, switchMap} from "rxjs";
+import {
+  catchError,
+  forkJoin,
+  map,
+  Observable,
+  of, shareReplay,
+  Subject,
+  switchMap,
+} from "rxjs";
 import {Ingredient} from "./model/Ingredient";
 import {IngredientImage} from "./model/IngredientImage";
-import {IngredientDetails} from "./model/IngerdientDetails";
+import {IngredientDetails} from "./model/IngredientDetails";
+import {IngredientResult} from "./model/IngredientResult";
+import {CONST} from "../../config/const.config";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +27,7 @@ export class IngredientService {
   constructor() {
   }
 
-  getIngredients(settings: Settings): Observable<{ total: number, ingredients: Ingredient[] }> {
+  getIngredients(settings: Settings): Observable<IngredientResult> {
     const {limit, offset} = settings;
     return this.http.get<{
       count: number,
@@ -28,11 +38,11 @@ export class IngredientService {
           this.http.get<{ results: IngredientImage[] }>(`${API.ingredient_image}?ingredient_id=${ingredient.id}`).pipe(
             map(response => ({
               ...ingredient,
-              image: response.results[0]?.image || "assets/default-ing.png"
+              image: response.results[0]?.image || CONST.defaultIngredientImage
             })),
             catchError(() => of({
               ...ingredient,
-              image: "assets/default-ing.png"
+              image: CONST.defaultIngredientImage
             }))
           )
         );
@@ -44,21 +54,26 @@ export class IngredientService {
           }))
         );
       }),
-      catchError((error) => {
-        console.error("Error fetching ingredients:", error);
-        return of({total: 0, ingredients: []});
+      catchError(() => {
+        const ingredient=new Ingredient();
+        ingredient.errorMessage="No ingredients are available at the moment !"
+        return of({total: 0, ingredients: [ingredient]});
       }),
-      finalize(() => {
-        console.log("doneee service ")
-      })
     );
   }
 
-  getIngredientDetails(id: number) {
-    return this.http.get<IngredientDetails>(`${API.ingredient_details}/${id}`);
+  getIngredientDetails(id: number):Observable<IngredientDetails> {
+    return this.http.get<IngredientDetails>(`${API.ingredient_details}/${id}`).pipe(
+      shareReplay(1),
+      catchError(()=>{
+        const ingredientDetails=new IngredientDetails();
+        ingredientDetails.errorMessage="This ingredient's details are not  available at the moment !"
+        return of(ingredientDetails)
+      })
+    )
   }
 
-  searchIngredients(keyword: string) {
+  searchIngredients(keyword: string):Observable<Ingredient[]> {
     return this.http.get<{
       suggestions: [{ data: Ingredient }]
     }>(`${API.search_ingredients}?language=english&term=${keyword}`).pipe(
@@ -68,15 +83,20 @@ export class IngredientService {
             const ingredient = ingredientObject.data
           ingredient.image = ingredient.image
             ? `${API.api_host_prefix}${ingredient.image}`
-            : 'assets/default-ing.png';
+            : CONST.defaultIngredientImage;
             return ingredient;
           }
         )
       }),
+      catchError(()=>{
+        const ingredient=new Ingredient();
+        ingredient.errorMessage="We're having trouble searching this ingredient , please try again!";
+        return of([ingredient])
+      })
     )
   }
 
-  selectIngredient(ingredient: Ingredient) {
+  selectIngredient(ingredient: Ingredient):void {
     this.#selectedIngredient.next(ingredient)
   }
 }

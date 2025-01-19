@@ -40,7 +40,7 @@ export class IngredientComponent {
   activatedRoute=inject(ActivatedRoute)
   ingredients$:Observable<Ingredient[]>;
   searchIngredients$:Observable<Ingredient[]>
-  limit=5; //TODO: find a better placement for this than hardcoding
+  limit=5;
   total=signal(0);
   isLoading=signal(false)
   isSearching=signal(false)

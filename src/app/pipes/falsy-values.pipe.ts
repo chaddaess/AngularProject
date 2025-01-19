@@ -5,9 +5,12 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true
 })
 export class FalsyValuesPipe implements PipeTransform {
-  transform(value: unknown,unit:string): any {
-    if(!value || value===""){
+  transform(value: number|string|undefined,unit:string): string {
+    if(!value || typeof value==="string" && value.trim()===""){
       return "N.A."
+    }
+    if (typeof value === "number") {
+      value = parseFloat(value.toFixed(2));
     }
     return `${value} ${unit}`;
   }

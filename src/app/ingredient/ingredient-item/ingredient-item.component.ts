@@ -1,6 +1,7 @@
 import {Component, inject, Input} from '@angular/core';
 import {Ingredient} from "../model/Ingredient";
 import {IngredientService} from "../ingredient.service";
+import {CONST} from "../../../config/const.config";
 
 @Component({
   selector: 'app-ingredient-item',
@@ -17,6 +18,6 @@ export class IngredientItemComponent {
     this.ingredientService.selectIngredient(this.ingredient)
   }
   onImageLoadingError(){
-    this.ingredient.image='assets/default-ing.png'
+    this.ingredient.image=CONST.defaultIngredientImage
   }
 }
