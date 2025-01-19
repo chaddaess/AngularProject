@@ -24,7 +24,7 @@ export const NAVBAR_TEXTS = {
   NUTRITION: "Nutrition",
   WEIGHT: "Weight",
   ROUTINES: "Routines",
-  PREFERENCES: "Preferences",
+  PREFERENCES: "userSettings",
   LOGIN: "Login",
   LOGOUT: "Logout"
 };
