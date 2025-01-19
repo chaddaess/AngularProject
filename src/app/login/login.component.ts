@@ -14,7 +14,6 @@ import {HttpClientModule} from "@angular/common/http";
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  //authService = inject(AuthService);
   router = inject(Router);
   loginForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
@@ -46,7 +45,6 @@ export class LoginComponent {
           if (this.authService.isLoggedIn()) {
             this.router.navigate(['']);
           }
-          console.log(data);
         });
     }
   }

@@ -1,6 +1,6 @@
 <section class="bg-background-dark">
   <div class="flex flex-col items-center justify-center ">
-    <a href="#" class="flex  mt-5 items-center mb-6 text-2xl font-semibold text-text-light dark:text-text-light">
+    <a href="#" class="flex  mt-5 items-center mb-6 text-2xl font-semibold text-text-light">
       <img class="w-8 h-8 mr-2" src="assets/logo.png" alt="logo">
       {{ LOGIN_PAGE_TEXTS.APP_TITLE }}
     </a>
@@ -11,8 +11,8 @@
         </h1>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6">
           <div>
-            <label for="email" class="block mb-2 text-sm font-medium text-text-light dark:text-text-light">{{ LOGIN_PAGE_TEXTS.EMAIL_LABEL }}</label>
-            <input type="email" formControlName="email" id="email" class="bg-secondary-light border border-secondary DEFAULT text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark dark:placeholder-placeholderDark dark:text-text-light dark:focus:ring-primary-focus dark:focus:border-primary-focus" placeholder="name@company.com">
+            <label for="email" class="block mb-2 text-sm font-medium text-text-light">{{ LOGIN_PAGE_TEXTS.EMAIL_LABEL }}</label>
+            <input type="email" formControlName="email" id="email" class="text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 bg-secondary-dark border-secondary-dark placeholder-placeholderDark" placeholder="name@company.com">
             @if (email?.invalid && email?.touched) {
               <div class="text-red-500 text-sm">
                 @if (email?.errors?.['required']) {
@@ -26,7 +26,7 @@
           </div>
           <div>
             <label for="username" class="block mb-2 text-sm font-medium text-text-light dark:text-text-light">{{ LOGIN_PAGE_TEXTS.USERNAME_LABEL }}</label>
-            <input formControlName="username" id="username" class="bg-secondary-light border border-secondary DEFAULT text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark dark:placeholder-placeholderDark dark:text-text-light dark:focus:ring-primary-focus dark:focus:border-primary-focus" placeholder="username">
+            <input formControlName="username" id="username" class="text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 bg-secondary-dark border-secondary-dark placeholder-placeholderDark" placeholder="username">
          @if(username?.invalid && username?.touched) {
              <div class="text-red-500 text-sm">
                @if(username?.errors?.['required']) {
@@ -37,7 +37,7 @@
           </div>
           <div>
             <label for="password" class="block mb-2 text-sm font-medium text-text-light">{{ LOGIN_PAGE_TEXTS.PASSWORD_LABEL }}</label>
-            <input type="password" formControlName="password" id="password" placeholder="••••••••" class="bg-secondary-light border border-secondary DEFAULT rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark text-text-light ">
+            <input type="password" formControlName="password" id="password" placeholder="••••••••" class="text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 bg-secondary-dark border-secondary-dark placeholder-placeholderDark">
             @if(password?.invalid && password?.touched) {
               <div class="text-red-500 text-sm">
                 @if(password?.errors?.['required']) {
