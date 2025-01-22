@@ -1,4 +1,3 @@
-
 export const API_BASE_URL = "https://wger.de";
 export const API=
   {
@@ -10,4 +9,5 @@ export const API=
     ingredient_image: `${API_BASE_URL}/api/v2/ingredient-image`,
     ingredient_details: `${API_BASE_URL}/api/v2/ingredientinfo`,
     search_ingredients: `${API_BASE_URL}/api/v2/ingredient/search`,
+    muscle: `${API_BASE_URL}/api/v2/muscle`,
   };
