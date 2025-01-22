@@ -2,7 +2,8 @@ export const CONST = {
   accessToken: "accessToken",
   currentUser:"currentUser",
   username: "username",
-  password: "password"
+  password: "password",
+  defaultIngredientImage:'assets/default-ing.png',
 };
 export const APP_TITLE = "HealthSphere";
 export const UI_TEXTS = {
