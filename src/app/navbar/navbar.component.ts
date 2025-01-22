@@ -24,4 +24,6 @@ export class NavbarComponent {
     this.authService.logout();
     this.router.navigate([APP_ROUTES.login]);
   }
+
+    protected readonly APP_ROUTES = APP_ROUTES;
 }
