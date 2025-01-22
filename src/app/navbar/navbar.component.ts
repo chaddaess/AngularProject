@@ -1,8 +1,8 @@
 import {Component, inject} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
-import {NAVBAR_TEXTS} from "../Constants/Constants";
 import {AuthService} from "../auth/auth.service";
 import {APP_ROUTES} from "../../config/routes.config";
+import {UI_TEXTS} from "../../config/const.config";
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +18,7 @@ export class NavbarComponent {
   private router = inject(Router);
   constructor(public authService:AuthService) {}
 
-  protected readonly UI_TEXTS = NAVBAR_TEXTS;
+  protected readonly UI_TEXTS = UI_TEXTS;
 
   logout() {
     this.authService.logout();

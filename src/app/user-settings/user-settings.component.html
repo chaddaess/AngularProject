@@ -2,10 +2,10 @@
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
   <div class="space-y-12">
     <div class="pb-12">
-      <h2 class="text-2xl block font-medium text-text-light">Profile</h2>
+      <h2 class="text-2xl block font-medium text-text-light">{{UI_TEXTS.PROFILE}}</h2>
       <div class="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
         <div class="sm:col-span-4">
-          <label for="username" class="block mb-2 text-sm font-medium text-text-light">Username</label>
+          <label for="username" class="block mb-2 text-sm font-medium text-text-light">{{UI_TEXTS.USERNAME_LABEL}}</label>
           <input
             type="text"
             formControlName="username"
@@ -14,7 +14,7 @@
           />
         </div>
         <div class="sm:col-span-4">
-          <label for="email" class="block mb-2 text-sm font-medium text-text-light">Email</label>
+          <label for="email" class="block mb-2 text-sm font-medium text-text-light">{{UI_TEXTS.EMAIL_LABEL}}</label>
           <input
             type="email"
             formControlName="email"
@@ -23,16 +23,16 @@
           />
         </div>
         <div class="sm:col-span-4">
-          <label for="birthdate" class="block mb-2 text-sm font-medium text-text-light">Date of birth</label>
+          <label for="birthdate" class="block mb-2 text-sm font-medium text-text-light">{{UI_TEXTS.BIRTHDATE}}</label>
           <input
             type="date"
             formControlName="birthdate"
             id="birthdate"
-            class="bg-secondary-light border border-secondary DEFAULT text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark dark:placeholder-placeholderDark dark:text-text-light dark:focus:ring-primary-focus dark:focus:border-primary-focus"
+            class="bg-secondary-light border border-secondary text-text-light rounded-lg focus:ring-primary-focus focus:border-primary-focus block w-full p-2.5 dark:bg-secondary-dark dark:border-secondary-dark dark:placeholder-placeholderDark dark:text-text-light dark:focus:ring-primary-focus dark:focus:border-primary-focus"
           />
         </div>
         <div class="sm:col-span-4">
-          <label for="height" class="block mb-2 text-sm font-medium text-text-light">Height</label>
+          <label for="height" class="block mb-2 text-sm font-medium text-text-light">{{UI_TEXTS.HEIGHT}}</label>
           <input
             type="number"
             formControlName="height"
@@ -46,7 +46,7 @@
         (click)="onSubmit()"
         class="mt-5 w-1/2 text-text-light bg-primary DEFAULT hover:bg-primary-hover focus:ring-4 focus:outline-none focus:ring-primary-focus font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary DEFAULT dark:hover:bg-primary-hover dark:focus:ring-primary-focus"
       >
-        Save
+        {{UI_TEXTS.SAVE}}
       </button>
     </div>
 

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../auth/user';
+import {UI_TEXTS} from "../../config/const.config";
 
 @Component({
   selector: 'app-user-settings',
@@ -16,7 +17,7 @@ import { User } from '../auth/user';
 export class UserSettingsComponent {
   profileForm!: FormGroup;
   currentUser: User | undefined;
-
+  protected readonly UI_TEXTS = UI_TEXTS;
   constructor(private fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit(): void {
