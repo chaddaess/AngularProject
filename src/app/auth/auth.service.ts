@@ -14,14 +14,17 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+    const storedUser = sessionStorage.getItem(CONST.currentUser);
+    if (storedUser) {
+      this.currentUserSubject.next(JSON.parse(storedUser));
+    } }
 
   login(data: CredentialsDto) {
     return this.httpClient.post(API.getToken, data).pipe(
       tap((result: any) => {
         localStorage.setItem(CONST.accessToken, result['access']);
         console.log(JSON.stringify(result));
-
       }),
       switchMap(() => this.getUserProfile()),
     );
@@ -29,17 +32,17 @@ export class AuthService {
 
   getUserProfile() {
     const headers = this.getAuthHeaders();
-
     return this.httpClient.get<User>(API.userProfile, {headers}).pipe(
       tap((user) => {
+        sessionStorage.setItem(CONST.currentUser, JSON.stringify(user));
         this.currentUserSubject.next(user);
-        console.log(user);
       })
     );
   }
 
   logout() {
     localStorage.removeItem(CONST.accessToken);
+    sessionStorage.removeItem(CONST.currentUser);
     this.currentUserSubject.next(null);
   }
 
@@ -47,10 +50,16 @@ export class AuthService {
     return !!localStorage.getItem(CONST.accessToken);
   }
 
-  private getAuthHeaders() {
+  getAuthHeaders() {
     const access_token = localStorage.getItem(CONST.accessToken);
     return new HttpHeaders({
       'Authorization': `Bearer ${access_token}`
     });
+  }
+  updateUserSettings(data:any){
+    const headers = this.getAuthHeaders();
+    return this.httpClient.post(API.userProfile, data, {headers}).pipe(
+      switchMap(() => this.getUserProfile()),
+    );
   }
 }

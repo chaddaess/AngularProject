@@ -36,10 +36,7 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    console.log(this.loginForm.value);
-
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
      this.authService.login(this.loginForm.value as CredentialsDto)
         .subscribe((data: any) => {
           if (this.authService.isLoggedIn()) {
