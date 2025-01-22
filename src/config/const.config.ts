@@ -1,3 +1,4 @@
 export const CONST = {
-  accessToken: "accessToken"
+  accessToken: "accessToken",
+  currentUser:"currentUser"
 };
