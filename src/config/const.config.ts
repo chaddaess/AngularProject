@@ -1,9 +1,9 @@
 export const CONST = {
   accessToken: "accessToken",
-  currentUser:"currentUser",
+  currentUser: "currentUser",
   username: "username",
   password: "password",
-  defaultIngredientImage:'assets/default-ing.png',
+  defaultIngredientImage: 'assets/default-img.png',
 };
 export const APP_TITLE = "HealthSphere";
 export const UI_TEXTS = {
@@ -30,7 +30,3 @@ export const UI_TEXTS = {
   PROFILE: "Profile",
   HEIGHT: "Height"
 };
-
-
-
-
