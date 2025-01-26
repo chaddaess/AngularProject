@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {API} from "../../config/api.config";
+import {API, API_BASE_URL} from "../../config/api.config";
 import {Settings} from "../Settings";
 import {
   catchError,
@@ -82,7 +82,7 @@ export class IngredientService {
         return ingredientObjects.map((ingredientObject) => {
             const ingredient = ingredientObject.data
           ingredient.image = ingredient.image
-            ? `${API.api_host_prefix}${ingredient.image}`
+            ? `${API_BASE_URL}${ingredient.image}`
             : CONST.defaultIngredientImage;
             return ingredient;
           }
