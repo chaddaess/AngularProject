@@ -1,6 +1,6 @@
 import {Exercise} from "./exercice";
 
-export enum DayOfWeek {Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
+export enum DayOfWeek {Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}
 
 export class Routine {
   constructor(
