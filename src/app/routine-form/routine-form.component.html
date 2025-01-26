@@ -1,0 +1,103 @@
+<form [formGroup]="routineForm" (ngSubmit)="onSubmit()">
+  <div formArrayName="exercises" class="space-y-4">
+    <h3 class="text-lg font-medium">Exercises</h3>
+
+    @for (exercise of exercises.controls; track exerciseIndex; let exerciseIndex = $index) {
+      <div [formGroupName]="exerciseIndex" class="border rounded-lg p-4 space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Exercise Name</label>
+            <input
+              type="text"
+              formControlName="exerciseName"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            >
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Rest Between Sets (seconds)</label>
+            <input
+              type="number"
+              formControlName="restBetweenSets"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            >
+          </div>
+          <span (click)="deleteExercise(exerciseIndex)">delete exercise</span>
+        </div>
+
+
+        <div formArrayName="sets" class="space-y-2">
+          <h4 class="text-md font-medium">Sets</h4>
+          @for (set of exercises.controls.at(exerciseIndex)?.controls?.sets?.controls; track setIndex; let setIndex = $index) {
+            <div [formGroupName]="setIndex" class="flex items-center space-x-2">
+              <div class="flex-grow grid grid-cols-4 gap-2">
+                <input
+                  type="number"
+                  formControlName="reps"
+                  placeholder="Reps"
+                  class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                >
+                <input
+                  type="number"
+                  formControlName="weight"
+                  placeholder="Weight"
+                  class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                >
+                <select
+                  formControlName="weightUnit"
+                  class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                >
+                  <option value="kg">kg</option>
+                  <option value="lbs">lbs</option>
+                </select>
+                <input
+                  type="number"
+                  formControlName="rer"
+                  placeholder="RER"
+                  class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                >
+              </div>
+              <div class="flex space-x-2">
+                <button
+                  type="button"
+                  (click)="duplicateSet(exerciseIndex, setIndex)"
+                  class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                  Duplicate
+                </button>
+                <button
+                  type="button"
+                  (click)="deleteSet(exerciseIndex, setIndex)"
+                  class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          }
+          <button
+            type="button"
+            (click)="addSet(exerciseIndex)"
+            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+          >
+            Add Set
+          </button>
+        </div>
+      </div>
+    }
+
+    <button
+      type="button"
+      (click)="addExercise()"
+      class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    >
+      Add Exercise
+    </button>
+  </div>
+
+  <button
+    type="submit"
+  >
+    Submit
+  </button>
+</form>
