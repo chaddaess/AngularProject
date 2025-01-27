@@ -1,8 +1,9 @@
 import { Component, Output, EventEmitter, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, switchMap, catchError, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ExerciseService } from '../../services/exercise.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-bar',
@@ -17,10 +18,10 @@ export class SearchBarComponent {
 
   @Output() searchChange: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(private exerciseService: ExerciseService) {}
+  constructor(private exerciseService: ExerciseService, private router: Router) {}
 
 
-    onSearch(query: string): void {
+  onSearch(query: string): void {
     if (query.trim()) {
       this.filteredExercises$ = this.exerciseService.searchExercises(query);
     } else {
@@ -32,7 +33,7 @@ export class SearchBarComponent {
   }
 
   selectExercise(exercise: any): void {
-    this.searchQuery = exercise.name; 
-    this.filteredExercises$ = of([]); 
+    const id = exercise.id; 
+    this.router.navigate(['/exercise', id]);
   }
 }

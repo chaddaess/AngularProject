@@ -1,0 +1,46 @@
+<div *ngIf="exercise$ | async as exercise" class="container mx-auto p-6">
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-4xl mx-auto">
+     <button (click)="goBack()" class="flex items-center text-blue-500 mb-4">
+        Exercises
+      </button>
+  
+      <h1 class="text-3xl font-bold mb-4 text-gray-800">{{ exercise.name }}</h1>
+        <p class="text-gray-600 text-sm mb-6">
+        <span class="font-medium">Category:</span> {{ exercise.category}}
+      </p>
+  
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <p class="text-gray-700">
+            <span class="font-medium">Muscles:</span> {{ exercise.muscles}}
+          </p>
+          <p class="text-gray-700 mt-4">
+            <span class="font-medium">Secondary Muscles:</span> {{ exercise.secondaryMuscles}}
+          </p>
+          <p class="text-gray-700 mt-4">
+            <span class="font-medium">Equipment:</span> {{ exercise.equipment}}
+          </p>
+        </div>
+  
+        <div>
+          <p class="text-gray-700">
+            <span class="font-medium">Description:</span>
+          </p>
+          <p class="text-gray-600 text-sm mt-2">{{ exercise.description }}</p>
+  
+          <p class="text-gray-700 mt-4">
+            <span class="font-medium">Variations:</span> {{ exercise.variations  }}
+          </p>
+        </div>
+      </div>
+  
+      <div class="mt-8">
+        <h2 class="text-lg font-semibold text-gray-800">Images</h2>
+        <div class="flex gap-4 mt-4">
+          <img *ngFor="let image of exercise.images" [src]="image" alt="{{ exercise.name }}" class="w-32 h-32 object-cover rounded-lg border">
+          <p *ngIf="!exercise.images?.length" class="text-gray-600">No images available.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

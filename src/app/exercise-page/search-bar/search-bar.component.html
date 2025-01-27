@@ -13,7 +13,7 @@
           <ul>
             @for (exercise of filteredExercises$ | async ; track exercise) {
               <li class="p-2 cursor-pointer hover:bg-gray-200" (click)="selectExercise(exercise)">
-                {{ exercise }}
+                {{ exercise.value }}
               </li>
             }
           </ul>

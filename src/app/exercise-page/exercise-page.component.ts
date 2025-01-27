@@ -119,6 +119,7 @@ changePage(page: number) {
       item.selected = !item.selected;
     }
   }
+  
  
   
 }

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-exercise-card',
@@ -9,5 +10,10 @@ import { Component, Input } from '@angular/core';
 })
 export class ExerciseCardComponent {
   @Input() exercise: any
+  constructor(private router: Router){}
+  selectExercise(exercise: any): void {
+    const id = exercise.id; 
+    this.router.navigate(['/exercise', id]);
+  }
 
 }

@@ -1,15 +1,4 @@
-<div class="card-container">
-  <!-- to fix loading cuz ghalet -->
-  @if(exercise.length) {
-    <div class="p-6 bg-white shadow-lg rounded-lg animate-pulse">
-      <div class="h-4 bg-gray-300 rounded w-1/4 mb-4"></div> 
-      <br><br><br><br>
-      <div class="h-6 bg-gray-300 rounded w-1/2 mb-6"></div><br>
-      <div class="h-4 bg-gray-300 rounded w-3/4 mb-4"></div><br><br>
-      <div class="h-4 bg-gray-300 rounded w-1/2"></div> <br><br><br><br>
-    </div>
-  }
-  @else {
+<div class="card-container" (click)="selectExercise(exercise)">
     <div class="card">
       <!-- Front Side -->
       <div class="card-side card-front p-6 bg-white shadow-lg rounded-lg relative">
@@ -55,5 +44,4 @@
         <p class="card-description">{{ exercise.description }}</p>
       </div>
     </div>
-  }
 </div>
