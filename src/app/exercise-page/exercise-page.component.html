@@ -9,7 +9,7 @@
       <app-list
         title="Catégorie"
         [items]="categoriesList"
-        (toggleItem)="onItemToggle($event, categoriesList)"
+        (toggleItem)="onItemToggle($event, 'categories')"
       >
       </app-list>
 
@@ -17,14 +17,14 @@
       <app-list
         title="Equipement"
         [items]="equipmentsList"
-        (toggleItem)="onItemToggle($event, equipmentsList)"
+        (toggleItem)="onItemToggle($event, 'equipments')"
       >
       </app-list>
       <br /><br />
       <app-list
         title="Muscles"
         [items]="musclesList"
-        (toggleItem)="onItemToggle($event, musclesList)"
+        (toggleItem)="onItemToggle($event, 'muscles')"
       >
       </app-list>
     </div>
@@ -60,7 +60,7 @@
 
       <app-exercise-grid
         [loading]="exercisesAreLoading"
-        [exercises]="exercisesList"
+        [exercises]="filteredExercises"
       ></app-exercise-grid>
     </div>
   </div>

@@ -22,7 +22,8 @@ export class ExerciseService {
   }
   getMuscles(): Observable<string[]> {
     return this.http.get<any>(`${API.muscle}`).pipe(
-      map((response) => response.results.map((item: any) => item.name))
+      map((response) => response.results.map((item: any) => item.name_en === "" ? item.name : item.name_en))
+
     );
   }
   

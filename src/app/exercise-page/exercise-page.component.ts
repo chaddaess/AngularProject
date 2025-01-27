@@ -17,6 +17,7 @@ import { LoadingComponent } from '../loading/loading.component';
   styleUrl:'./exercise-page.component.css'
 })
 export class ExercisePageComponent {
+  
   currentPage: number = 1;
   totalPages: number = 10; 
   itemsPerPage: number = 12;
@@ -32,9 +33,12 @@ export class ExercisePageComponent {
   private pageOrder: number[] = [];  
   private cacheLimit: number = 5; 
   isLoading = signal(1);
-  filteredExercises$!: Observable<any[]>;
-
+  filteredExercises: Exercise[] = [];
   exercisesAreLoading = signal(1);
+  selectedCategories: string[] = [];
+  selectedMuscles: string[] = [];
+  selectedEquipment: string[] = [];
+
   constructor(
     private exerciseService: ExerciseService,
     private route: ActivatedRoute) {}
@@ -43,9 +47,12 @@ export class ExercisePageComponent {
       const data = this.route.snapshot.data['data'];
       this.exercisesList = data.exercises;
       this.exercisesSubject.next(this.exercisesList);
+      this.cache.set(1, this.exercisesList);
+      this.pageOrder.push(1);
       this.categoriesList = this.mapSelectedItems(data.categories);
       this.musclesList = this.mapSelectedItems(data.muscles);
       this.equipmentsList = this.mapSelectedItems(data.equipments);
+      this.filteredExercises=this.exercisesList;
       this.isLoading.set(0); //need to fix this, executed before asynch code
       this.exercisesAreLoading.set(0);
     }
@@ -61,6 +68,7 @@ ngOnDestroy(): void {
 loadPage(page: number) {
   if (this.cache.has(page)) {
     this.exercisesList = this.cache.get(page) || [];
+    this.filteredExercises=this.exercisesList;
     this.exercisesSubject.next(this.exercisesList);
     this.updatePageOrder(page); 
     this.exercisesAreLoading.set(0); 
@@ -81,7 +89,9 @@ fetchExercises(page: number) {
     this.pageOrder.push(page); 
     this.exercisesList = exercises;
     this.exercisesSubject.next(exercises);
+    this.filteredExercises=this.exercisesList;
   });
+  
   this.subscriptions.push(subs);
   
 }
@@ -113,13 +123,92 @@ changePage(page: number) {
 
 }
   
-  onItemToggle(itemName: string, itemList: { name: string, selected: boolean }[]) {
-    const item = itemList.find((cat) => cat.name === itemName);
-    if (item) {
-      item.selected = !item.selected;
+onItemToggle(itemName: string, type: string) {
+  let item: any;
+  switch (type) {
+    case 'categories': {
+      item = this.categoriesList.find((cat) => cat.name === itemName);
+      if (item) {
+        item.selected = !item.selected;
+        this.toggleItem(itemName, this.selectedCategories);  // Passing name to selected list
+      }
+      break;
+    }
+    case 'equipments': {
+      item = this.equipmentsList.find((eq) => eq.name === itemName);
+      if (item) {
+        item.selected = !item.selected;
+        this.toggleItem(itemName, this.selectedEquipment);  // Passing name to selected list
+      }
+      break;
+    }
+    case 'muscles': {
+      item = this.musclesList.find((musc) => musc.name === itemName);
+      if (item) {
+        item.selected = !item.selected;
+        this.toggleItem(itemName, this.selectedMuscles);  // Passing name to selected list
+      }
+      break;
     }
   }
-  
- 
-  
+
+  this.filterExercises();
+}
+
+toggleItem(itemName: string, selectedList: string[]) {
+  const index = selectedList.indexOf(itemName);  // Find by name
+  if (index === -1) {
+    selectedList.push(itemName);  // Push only the name
+  } else {
+    selectedList.splice(index, 1);  // Remove the name
+  }
+}
+
+  filterExercises() {
+    let filtered = this.exercisesList; 
+    if (this.selectedCategories.length) {
+      filtered = filtered.filter(exercise => 
+        this.selectedCategories.includes(exercise.category));
+    }
+    if (this.selectedMuscles.length) {
+      filtered = filtered.filter(exercise => 
+        this.selectedMuscles.every(muscle => exercise.muscles.includes(muscle))
+      );
+    }
+    if (this.selectedEquipment.length ) {
+      filtered = filtered.filter(exercise => 
+        this.selectedEquipment.every(equipment => exercise.equipment.includes(equipment))
+      );
+    }
+
+    this.filteredExercises=filtered
+  }
+
+  onCategoryChange(category: string) {
+    if (this.selectedCategories.includes(category)) {
+      this.selectedCategories = this.selectedCategories.filter(m => m !== category);
+    } else {
+      this.selectedCategories.push(category);
+    }
+    this.filterExercises();
+  }
+
+  onMuscleChange(muscle: string) {
+    if (this.selectedMuscles.includes(muscle)) {
+      this.selectedMuscles = this.selectedMuscles.filter(m => m !== muscle);
+    } else {
+      this.selectedMuscles.push(muscle);
+    }
+    this.filterExercises();
+  }
+
+  onEquipmentChange(equipment: string) {
+    if (this.selectedEquipment.includes(equipment)) {
+      this.selectedEquipment = this.selectedEquipment.filter(e => e !== equipment);
+    } else {
+      this.selectedEquipment.push(equipment);
+    }
+    this.filterExercises();
+  }
+
 }
