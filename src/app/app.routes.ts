@@ -25,6 +25,6 @@ export const routes: Routes = [
     resolve:{ingredients:ingredientResolver}
   },
   {
-    path: APP_ROUTES.bmiCalculator, component: BmiCalculatorComponent 
+    path: APP_ROUTES.bmiCalculator, component: BmiCalculatorComponent , canActivate: [authGuard]
   },
 ];
