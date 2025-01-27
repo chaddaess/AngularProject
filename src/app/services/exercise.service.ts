@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { API } from '../../config/api.config';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, catchError, debounceTime, map, of, switchMap } from 'rxjs';
 import { Exercise } from '../models/exercise.model';
 
 @Injectable({
@@ -51,5 +51,27 @@ export class ExerciseService {
     const doc = parser.parseFromString(description, 'text/html');
     return doc.body.textContent || '';
   }
+
+    searchExercises(query: string): Observable<any[]> {
+      if (!query.trim()) {
+        return of([]); }
+
+      const params = new HttpParams()
+      .set('language', 'en')
+      .set('term', query);
+    
+      return this.http.get<any[]>(`${API.exerciseSearch}`, { params }).pipe(
+        debounceTime(500), 
+        switchMap((response:any) => {
+          console.log('filtered names', response.suggestions); 
+          return of(response.suggestions.map((item: any) => item.value));
+    }),
+    catchError((error) => {
+      console.error('Error fetching exercises:', error);
+      return of([]); 
+    })
+  );
+    }
+  }
   
-}
+

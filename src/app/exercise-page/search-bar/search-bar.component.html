@@ -1,15 +1,29 @@
-
-<div class="flex items-center space-x-4 p-4 bg-gray-100 rounded-lg shadow-md">
+<div class="search-bar-container relative">
     <input
       type="text"
       [(ngModel)]="searchQuery"
-      (input)="onSearch()"
+      (input)="onSearch(searchQuery)"
+      (focus)="onFocus()"
       placeholder="Search exercises..."
       class="w-full px-4 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
     />
-    <button
-      class="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
-    >
-      Search
-    </button>
+    
+    @if (filteredExercises$ | async ) {
+        <div class="autocomplete-dropdown absolute w-full mt-1 bg-white shadow-md max-h-60 overflow-y-auto z-10 border rounded-lg">
+          <ul>
+            @for (exercise of filteredExercises$ | async ; track exercise) {
+              <li class="p-2 cursor-pointer hover:bg-gray-200" (click)="selectExercise(exercise)">
+                {{ exercise }}
+              </li>
+            }
+          </ul>
+        </div>
+      }
+      
+      
+     @else{
+      <div  class="autocomplete-dropdown absolute w-full mt-1 bg-white shadow-md max-h-60 overflow-y-auto z-10 border rounded-lg">
+        <p class="p-2 text-gray-500">No results found</p>
+      </div>}
   </div>
+  

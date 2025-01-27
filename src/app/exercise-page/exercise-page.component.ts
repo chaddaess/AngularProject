@@ -32,6 +32,8 @@ export class ExercisePageComponent {
   private pageOrder: number[] = [];  
   private cacheLimit: number = 5; 
   isLoading = signal(1);
+  filteredExercises$!: Observable<any[]>;
+
   exercisesAreLoading = signal(1);
   constructor(
     private exerciseService: ExerciseService,
@@ -47,6 +49,7 @@ export class ExercisePageComponent {
       this.isLoading.set(0); //need to fix this, executed before asynch code
       this.exercisesAreLoading.set(0);
     }
+
 
 mapSelectedItems(items: string[]): { name: string; selected: boolean }[] {
   return items.map(item => ({ name: item, selected: false })); // Set 'selected' to false initially
@@ -116,5 +119,6 @@ changePage(page: number) {
       item.selected = !item.selected;
     }
   }
+ 
   
 }

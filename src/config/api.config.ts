@@ -5,4 +5,5 @@ export const API = {
 'equipment':'https://wger.de/api/v2/equipment',
 'muscle': 'https://wger.de/api/v2/muscle',
 'exercisebaseinfo':'https://wger.de/api/v2/exercisebaseinfo',
+'exerciseSearch':'https://wger.de/api/v2/exercise/search'
 };
