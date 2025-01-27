@@ -4,6 +4,54 @@ export const CONST = {
   username: "username",
   password: "password",
   defaultIngredientImage:'assets/default-ing.png',
+  chartOptions: {
+    responsive: true,
+    scales: {
+      x: {
+        title: { display: true, text: 'Height (cm)' },
+        min: 140,
+        max: 220,
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        title: { display: true, text: 'Weight (kg)' },
+        min: 30,
+        max: 150,
+        grid: {
+          display: false,
+        },
+      },
+    },
+    plugins: {
+      tooltip: {
+        enabled: false,
+      },
+      legend: {
+        display: true,
+        labels: {
+          boxWidth: 20,
+          boxHeight: 10,
+          padding: 15,
+        },
+      },
+    },
+  },
+  bmiRanges: [
+    { label: 'Underweight', minBMI: 0, maxBMI: 18.5, color: '#FDB462' },
+    { label: 'Normal', minBMI: 18.5, maxBMI: 24.9, color: '#B3DE69' },
+    { label: 'Overweight', minBMI: 24.9, maxBMI: 29.9, color: '#FFD700' },
+    { label: 'Obese', minBMI: 29.9, maxBMI: 100, color: '#FF6347' },
+  ],
+  tooltip: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    textColor: '#000000',
+    font: '12px Arial',
+    tooltipWidth: 160,
+    tooltipHeight: 120,
+    offset: 10,
+  },
 };
 export const APP_TITLE = "HealthSphere";
 export const UI_TEXTS = {
@@ -28,7 +76,8 @@ export const UI_TEXTS = {
   BIRTHDATE: "Birthdate",
   SAVE: "Save",
   PROFILE: "Profile",
-  HEIGHT: "Height"
+  HEIGHT: "Height",
+  BMI: "BMI",
 };
 
 

@@ -1,8 +1,9 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, NgZone } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import Chart from 'chart.js/auto';
+import { CONST } from '../../config/const.config';  
 
 @Component({
   selector: 'app-bmi-calculator',
@@ -17,16 +18,19 @@ export class BmiCalculatorComponent implements AfterViewInit {
   bmi: number | null = null;
   chart: Chart | null = null;
 
+  constructor(private zone: NgZone) {}
+
   ngAfterViewInit(): void {
-    this.initializeChart();
+    this.zone.runOutsideAngular(() => {
+      this.initializeChart();
+    });
+      this.heightControl.valueChanges
+        .pipe(debounceTime(600), distinctUntilChanged())
+        .subscribe(() => this.updateChart());
 
-    this.heightControl.valueChanges
-      .pipe(debounceTime(600), distinctUntilChanged())
-      .subscribe(() => this.updateChart());
-
-    this.weightControl.valueChanges
-      .pipe(debounceTime(600), distinctUntilChanged())
-      .subscribe(() => this.updateChart());
+      this.weightControl.valueChanges
+        .pipe(debounceTime(600), distinctUntilChanged())
+        .subscribe(() => this.updateChart());
   }
 
   calculateBMI(): void {
@@ -38,7 +42,7 @@ export class BmiCalculatorComponent implements AfterViewInit {
       this.bmi = null;
     }
   }
-  
+
   initializeChart(): void {
     const canvas = document.getElementById('bmiChart') as HTMLCanvasElement;
     const calculateWeight = (height: number, bmi: number): number => {
@@ -55,12 +59,7 @@ export class BmiCalculatorComponent implements AfterViewInit {
       return;
     }
 
-    const bmiRanges = [
-      { label: 'Underweight', minBMI: 0, maxBMI: 18.5, color: '#FDB462' },
-      { label: 'Normal', minBMI: 18.5, maxBMI: 24.9, color: '#B3DE69' },
-      { label: 'Overweight', minBMI: 24.9, maxBMI: 29.9, color: '#FFD700' },
-      { label: 'Obese', minBMI: 29.9, maxBMI: 100, color: '#FF6347' },
-    ];
+    const bmiRanges = CONST.bmiRanges;
 
     this.chart = new Chart(ctx, {
       type: 'scatter',
@@ -81,42 +80,8 @@ export class BmiCalculatorComponent implements AfterViewInit {
           })),
         ],
       },
-      options: {
-        responsive: true,
-        scales: {
-          x: {
-            title: { display: true, text: 'Height (cm)' },
-            min: 140,
-            max: 220,
-            grid: {
-              display: false,
-            },
-          },
-          y: {
-            title: { display: true, text: 'Weight (kg)' },
-            min: 30,
-            max: 150,
-            grid: {
-              display: false,
-            },
-          },
-        },
-        plugins: {
-          tooltip: {
-            enabled: false, 
-          },
-          legend: {
-            display: true,
-            labels: {
-              boxWidth: 20,
-              boxHeight: 10,
-              padding: 15,
-            },
-          },
-        },
-      },
+      options: CONST.chartOptions,
       plugins: [
-        // creating the background of the chart
         {
           id: 'bmiBackground',
           beforeDraw: (chart) => {
@@ -124,10 +89,6 @@ export class BmiCalculatorComponent implements AfterViewInit {
             const chartArea = chart.chartArea;
             const xScale = chart.scales['x'];
             const yScale = chart.scales['y'];
-
-            const calculateWeight = (height: number, bmi: number): number => {
-              return bmi * ((height / 100) ** 2);
-            };
 
             ctx.save();
             ctx.beginPath();
@@ -163,16 +124,13 @@ export class BmiCalculatorComponent implements AfterViewInit {
             ctx.restore();
           },
         },
-        // hover box logic
         {
           id: 'verticalLines',
           afterEvent: (chart, args) => {
             const event = args.event;
-            const canvas = chart.canvas;
             const ctx = chart.ctx;
             const chartArea = chart.chartArea;
             const xAxis = chart.scales['x'];
-            const yAxis = chart.scales['y'];
         
             const mouseX = event.x ?? 0;
             const mouseY = event.y ?? 0;
@@ -180,7 +138,7 @@ export class BmiCalculatorComponent implements AfterViewInit {
             chart.draw();
         
             if (!isHoveringInsideChart) {
-              return; 
+              return;
             }
         
             const height = xAxis.getValueForPixel(mouseX);
@@ -188,7 +146,7 @@ export class BmiCalculatorComponent implements AfterViewInit {
             const specificHeights = Array.from({ length: 9 }, (_, i) => 140 + i * 15); 
             if (!height) return;
             const hoveredHeight = specificHeights.find(h => Math.abs(h - height) < 1); 
-        
+         
             if (hoveredHeight) {
               const lineX = xAxis.getPixelForValue(hoveredHeight);
               ctx.save();
@@ -200,18 +158,17 @@ export class BmiCalculatorComponent implements AfterViewInit {
               ctx.stroke();
               ctx.restore();
         
-              const tooltipWidth = 160;
-              const tooltipHeight = 120;
-              const tooltipX = lineX + 10;
-              const tooltipY = chartArea.top + 10;
+              const { tooltipWidth, tooltipHeight, offset } = CONST.tooltip;
+              const tooltipX = lineX + offset;
+              const tooltipY = chartArea.top + offset;
         
               const adjustedX = Math.min(tooltipX, chartArea.right - tooltipWidth);
               const adjustedY = Math.min(tooltipY, chartArea.bottom - tooltipHeight);
         
-              ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+              ctx.fillStyle = CONST.tooltip.backgroundColor;
               ctx.fillRect(adjustedX, adjustedY, tooltipWidth, tooltipHeight);
-              ctx.fillStyle = '#000000';
-              ctx.font = '12px Arial';
+              ctx.fillStyle = CONST.tooltip.textColor;
+              ctx.font = CONST.tooltip.font;
               ctx.fillText(`Height: ${hoveredHeight} cm`, adjustedX + 10, adjustedY + 20);
         
               bmiRanges.forEach((range, index) => {
@@ -232,6 +189,7 @@ export class BmiCalculatorComponent implements AfterViewInit {
       const userPoint = { x: this.heightControl.value, y: this.weightControl.value };
       this.chart.data.datasets[0].data = [userPoint];
       this.chart.update();
+      };
     }
   }
-}
+

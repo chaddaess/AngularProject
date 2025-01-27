@@ -9,6 +9,7 @@
           <a [routerLink]="['']" class="block py-2 px-3 text-white rounded md:bg-transparent md:p-0" aria-current="page">{{UI_TEXTS.WEIGHT}}</a>
 
           <a [routerLink]="['']" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{ UI_TEXTS.ROUTINES }}</a>
+          <a [routerLink]="[APP_ROUTES.bmiCalculator]" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{UI_TEXTS.BMI}}</a>
         @if(authService.isLoggedIn())  {
           <a [routerLink]="[APP_ROUTES.preferences]" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{UI_TEXTS.PREFERENCES}}</a>
         }
