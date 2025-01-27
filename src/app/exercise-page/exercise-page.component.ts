@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ListComponent } from './list/list.component';
 import { ExerciseService } from '../services/exercise.service';
-import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, finalize, map } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ExerciseGridComponent } from './exercise-grid/exercise-grid.component';
 import { ActivatedRoute } from '@angular/router';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import {Exercise} from '../models/exercise.model'
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-exercise-page',
   standalone: true,
-  imports: [ListComponent,CommonModule,ExerciseGridComponent,SearchBarComponent],
+  imports: [ListComponent,CommonModule,ExerciseGridComponent,SearchBarComponent,LoadingComponent],
   templateUrl: './exercise-page.component.html',
   styleUrl:'./exercise-page.component.css'
 })
@@ -19,9 +20,6 @@ export class ExercisePageComponent {
   currentPage: number = 1;
   totalPages: number = 10; 
   itemsPerPage: number = 12;
-  categories$: Observable<string[]> = this.exerciseService.getCategories();
-  equipments$: Observable<string[]> = this.exerciseService.getEquipments();
-  muscles$: Observable<string[]> = this.exerciseService.getMuscles();
   categoriesList: { name: string; selected: boolean }[] = [];
   equipmentsList: { name: string; selected: boolean }[] = [];
   musclesList: { name: string; selected: boolean }[] = [];
@@ -33,20 +31,23 @@ export class ExercisePageComponent {
   private cache: Map<number, Exercise[]> = new Map();
   private pageOrder: number[] = [];  
   private cacheLimit: number = 5; 
-  
+  isLoading = signal(1);
+  exercisesAreLoading = signal(1);
   constructor(
     private exerciseService: ExerciseService,
     private route: ActivatedRoute) {}
 
-ngOnInit() {
-  this.fetchExercises(this.currentPage);
-  this.subscriptions.push(
-    this.categories$.subscribe(data => this.categoriesList = this.mapSelectedItems(data)),
-    this.muscles$.subscribe(data => this.musclesList = this.mapSelectedItems(data)),
-    this.equipments$.subscribe(data => this.equipmentsList = this.mapSelectedItems(data)),
-    this.exercises$.subscribe(data => this.exercisesList = data)
-  );
-}
+    ngOnInit() {
+      const data = this.route.snapshot.data['data'];
+      this.exercisesList = data.exercises;
+      this.exercisesSubject.next(this.exercisesList);
+      this.categoriesList = this.mapSelectedItems(data.categories);
+      this.musclesList = this.mapSelectedItems(data.muscles);
+      this.equipmentsList = this.mapSelectedItems(data.equipments);
+      this.isLoading.set(0); //need to fix this, executed before asynch code
+      this.exercisesAreLoading.set(0);
+    }
+
 mapSelectedItems(items: string[]): { name: string; selected: boolean }[] {
   return items.map(item => ({ name: item, selected: false })); // Set 'selected' to false initially
 }
@@ -58,14 +59,18 @@ loadPage(page: number) {
   if (this.cache.has(page)) {
     this.exercisesList = this.cache.get(page) || [];
     this.exercisesSubject.next(this.exercisesList);
-    this.updatePageOrder(page);  
+    this.updatePageOrder(page); 
+    this.exercisesAreLoading.set(0); 
   } else {
     this.fetchExercises(page);
   }
 }
 
 fetchExercises(page: number) {
-  const subs = this.exerciseService.fetchExercises(page, this.itemsPerPage).subscribe((exercises) => {
+  const subs = this.exerciseService.fetchExercises(page, this.itemsPerPage).pipe(
+    finalize(() => {
+      this.exercisesAreLoading.set(0);
+    })).subscribe((exercises) => {
     if (this.cache.size >= this.cacheLimit) {
       this.removeLeastRecentlyUsedPage();  
     }
@@ -74,7 +79,8 @@ fetchExercises(page: number) {
     this.exercisesList = exercises;
     this.exercisesSubject.next(exercises);
   });
-  this.subscriptions.push(subs)
+  this.subscriptions.push(subs);
+  
 }
 
 updatePageOrder(page: number) {
@@ -93,13 +99,16 @@ removeLeastRecentlyUsedPage() {
 }
 
 changePage(page: number) {
+  this.exercisesAreLoading.set(1);
+  console.log("isloading",this.isLoading());
   if (page >= 1 && page <= this.totalPages) {
     this.currentPage = page;
     this.loadPage(page);
     console.log("cached pages: ", this.cache.keys())  
-  }
-}
+  };
+  console.log("isloading",this.isLoading());
 
+}
   
   onItemToggle(itemName: string, itemList: { name: string, selected: boolean }[]) {
     const item = itemList.find((cat) => cat.name === itemName);

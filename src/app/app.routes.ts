@@ -4,13 +4,8 @@ import { exerciseResolver } from './resolvers/exercise.resolver';
 
 export const routes: Routes = [
     {
-        path: 'exercises', component: ExercisePageComponent/*, children: [
-          {
-            path: ":id",
-            component: IngredientDetailsComponent,
-          }
-        ]*/,
-        resolve:{exercises: exerciseResolver}
+        path: 'exercises', component: ExercisePageComponent,
+        resolve:{data: exerciseResolver}
       },
    
 ];

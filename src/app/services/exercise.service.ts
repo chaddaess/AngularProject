@@ -9,7 +9,7 @@ import { Exercise } from '../models/exercise.model';
 })
 export class ExerciseService {
   constructor(private http: HttpClient) {}
-
+  
   getCategories(): Observable<string[]> {
     return this.http.get<any>(`${API.category}`).pipe(
       map((response) => response.results.map((item: any) => item.name))
