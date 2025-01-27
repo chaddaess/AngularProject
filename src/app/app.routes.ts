@@ -7,6 +7,7 @@ import {IngredientComponent} from "./ingredient/ingredient.component";
 import {IngredientDetailsComponent} from "./ingredient/ingredient-details/ingredient-details.component";
 import {ingredientResolver} from "./ingredient/resolvers/ingredient-resolver";
 import {RoutineFormComponent} from "./routine-form/routine-form.component";
+import {RoutinesComponent} from "./routines/routines.component";
 
 export const routes: Routes = [
   {
@@ -16,7 +17,7 @@ export const routes: Routes = [
     path: APP_ROUTES.preferences, component: UserSettingsComponent, canActivate: [authGuard]
   },
     {
-    path: APP_ROUTES.routines, component: RoutineFormComponent //TODO: Add auth guard
+    path: APP_ROUTES.routines, component: RoutinesComponent //TODO: Add auth guard
   },
   {
     path: 'ingredients', component: IngredientComponent, children: [

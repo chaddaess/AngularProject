@@ -1,6 +1,6 @@
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
 
-type Weekday = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
+export type Weekday = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday"; // TODO: impose this on the days
 export type WeightUnit = "kg" | "lb"; // TODO: impose this on the weight unit field
 
 export type SetForm = FormGroup<{
@@ -20,7 +20,7 @@ export type RoutineForm = FormGroup<{
 }>
 
 export type ExerciseDays = FormGroup<{
-  exerciseDay: FormControl<Weekday>,
+  exerciseDay: FormControl<string>,
 }>
 
 export type ExerciseForm = FormGroup<{

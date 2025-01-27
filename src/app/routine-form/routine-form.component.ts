@@ -65,12 +65,30 @@ export class RoutineFormComponent {
         this.exercises.at(exerciseIndex)?.controls?.sets?.removeAt(setIndex);
     }
 
-    protected onSubmit(): void {
-        if (this.routineForm.valid) {
-            console.log(this.routineForm);
+    protected updateScheduledDays(event: Event, day: string): void {
+        const checkbox = event.target as HTMLInputElement;
+        const scheduledDays = this.routineForm.controls.scheduledDays;
 
-            // const formValue = this.routineForm.value;
-            //
+        if (checkbox.checked) {
+            scheduledDays.push(this.fb.group({
+                exerciseDay: this.fb.control(day)
+            }));
+        } else {
+            const index = scheduledDays.controls.findIndex(control => control.value.exerciseDay === day);
+            if (index !== -1) {
+                scheduledDays.removeAt(index);
+            }
+        }
+    }
+
+    protected onSubmit(): void {
+        console.log(this.routineForm.value);
+
+        if (this.routineForm.valid) {
+            console.log("valid");
+
+            const formValue = this.routineForm.value;
+
             // this.routineService.createRoutine(formValue).subscribe({
             //   next: (routine) => {
             //     // Handle success
