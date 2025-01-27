@@ -1,23 +1,59 @@
 <div class="card-container">
+  <!-- to fix loading cuz ghalet -->
+  @if(exercise.length) {
+    <div class="p-6 bg-white shadow-lg rounded-lg animate-pulse">
+      <div class="h-4 bg-gray-300 rounded w-1/4 mb-4"></div> 
+      <br><br><br><br>
+      <div class="h-6 bg-gray-300 rounded w-1/2 mb-6"></div><br>
+      <div class="h-4 bg-gray-300 rounded w-3/4 mb-4"></div><br><br>
+      <div class="h-4 bg-gray-300 rounded w-1/2"></div> <br><br><br><br>
+    </div>
+  }
+  @else {
     <div class="card">
       <!-- Front Side -->
-      <div class="card-side card-front">
-        <h3 class="card-title">{{ exercise.name }}</h3>
-        <p class="card-equipment">Equipment: {{ exercise.equipment }}</p>
-        <div class="card-muscles">
-          <p class="muscles-title">Muscles:</p>
-          <ul>
-            @for (muscle of exercise.muscles; track muscle.name ){
-            <li>{{ muscle }}</li>
+      <div class="card-side card-front p-6 bg-white shadow-lg rounded-lg relative">
+        <span class="absolute top-4 left-4 px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg">
+          {{ exercise.category }}
+        </span>
+        <img 
+          src="{{exercise.image_url}}" 
+          alt="{{ exercise.name }}" 
+          class="w-full h-40 object-cover rounded-lg mt-4 mb-6"
+        />
+        <br>
+        <h3 class="text-xl font-semibold">{{ exercise.name }}</h3>
+        <br><br>
+        @if(exercise.equipment.length) {
+          <p class="text-gray-700 mt-2">Equipment: {{ exercise.equipment }}</p>
+        }
+        @else {
+          <p class="text-gray-700 mt-2">Equipment: No Equipment</p>
+        }
+
+        <div class="card-muscles mt-4">
+          <p class="font-medium text-gray-800">Muscles:</p>
+          <div>
+            @if(exercise.muscles.length) {
+              <ul class="list-disc pl-5">
+                @for (muscle of exercise.muscles; track muscle.name) {
+                  <li class="text-gray-700">{{ muscle }}</li>
+                }
+              </ul>
             }
-          </ul>
+            @else {
+              <ul class="list-disc pl-5">
+                <li class="text-gray-500">No specification available</li>
+              </ul>
+            }
+          </div>
         </div>
       </div>
-  
+
       <!-- Back Side -->
       <div class="card-side card-back">
-        <p class="card-description ">{{ exercise.description }}</p>
+        <p class="card-description">{{ exercise.description }}</p>
       </div>
     </div>
-  </div>
-  
+  }
+</div>
