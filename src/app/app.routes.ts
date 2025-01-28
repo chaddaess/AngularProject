@@ -16,8 +16,11 @@ export const routes: Routes = [
   {
     path: APP_ROUTES.preferences, component: UserSettingsComponent, canActivate: [authGuard]
   },
-    {
-    path: APP_ROUTES.routines, component: RoutinesComponent //TODO: Add auth guard
+  {
+    path: APP_ROUTES.routines, component: RoutinesComponent, canActivate: [authGuard]
+  },
+  {
+    path: APP_ROUTES.createRoutine, component: RoutineFormComponent, canActivate: [authGuard]
   },
   {
     path: 'ingredients', component: IngredientComponent, children: [

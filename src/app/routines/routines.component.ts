@@ -1,33 +1,58 @@
-import {Component, inject} from '@angular/core';
-import {RoutineService} from "../services/routine.service";
-import {RoutineFormComponent} from "../routine-form/routine-form.component";
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { RoutineService } from '../services/routine.service';
 import {Routine} from "../models/routine";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {ExerciseService} from "../services/exercise.service";
+import {APP_ROUTES} from "../../config/routes.config";
 
 @Component({
-  selector: 'app-routines',
+  selector: 'app-routine-list',
   standalone: true,
-  imports: [
-    RoutineFormComponent,
-    FormsModule,
-    ReactiveFormsModule
-  ],
-  templateUrl: './routines.component.html',
-  styleUrl: './routines.component.css'
+  imports: [CommonModule, RouterModule],
+  templateUrl: './routines.component.html'
 })
-export class RoutinesComponent {
-    // routineService: RoutineService = inject(RoutineService);
-    // exerciseService: ExerciseService = inject(ExerciseService);
-    // routines : Routine[] | null = null;
-    //
-    // ngOnInit(){
-    //   this.routineService.getRoutines().subscribe(res =>{
-    //     console.log(res);
-    //     this.routines = res;
-    //   })
-    //   this.exerciseService.getExercises().subscribe(res =>{
-    //     console.log(res);
-    //   })
-    // }
+export class RoutinesComponent implements OnInit {
+  private routineService = inject(RoutineService);
+  protected newRoutineLink = APP_ROUTES.createRoutine
+  protected routines: Routine[] = [];
+  protected selectedRoutine: Routine | null = null;
+  protected loading = true;
+  protected error: string | null = null;
+
+  ngOnInit() {
+    this.loadRoutines();
+  }
+
+  private loadRoutines() {
+    this.loading = true;
+    this.routineService.getRoutines().subscribe({
+      next: (routines) => {
+        console.log(routines);
+        this.routines = routines;
+        this.loading = false;
+      },
+      error: (error) => {
+        this.error = 'Failed to load routines. Please try again later.';
+        this.loading = false;
+      }
+    });
+  }
+
+  protected selectRoutine(routine: Routine) {
+    this.selectedRoutine = this.selectedRoutine === routine ? null : routine;
+  }
+
+  protected deleteRoutine(event: Event, routineId: number) {
+    event.stopPropagation();
+    if (confirm('Are you sure you want to delete this routine?')) {
+      this.routineService.deleteRoutine(routineId).subscribe({
+        next: () => {
+          this.routines = this.routines.filter(r => r.id !== routineId);
+        },
+        error: (error) => {
+          console.error('Error deleting routine:', error);
+        }
+      });
+    }
+  }
 }
