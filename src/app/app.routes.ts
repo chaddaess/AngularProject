@@ -15,7 +15,7 @@ export const routes: Routes = [
     path: APP_ROUTES.preferences, component: UserSettingsComponent , canActivate: [authGuard]
   },
   {
-    path: 'ingredients', component: IngredientComponent, children: [
+    path: APP_ROUTES.ingredient, component: IngredientComponent, children: [
       {
         path: ":id",
         component: IngredientDetailsComponent,
