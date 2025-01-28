@@ -11,4 +11,8 @@ export const API=
     search_ingredients: `${API_BASE_URL}/api/v2/ingredient/search`,
     muscle: `${API_BASE_URL}/api/v2/muscle`,
     day: `${API_BASE_URL}/api/v2/day/`,
+    workout: `${API_BASE_URL}/api/v2/workout/`,
+    exercise: `${API_BASE_URL}/api/v2/exercise/`,
+    search_exercises: `${API_BASE_URL}/api/v2/exercise/search`,
+    exercise_base: `${API_BASE_URL}/api/v2/exercisebaseinfo/`,
   };

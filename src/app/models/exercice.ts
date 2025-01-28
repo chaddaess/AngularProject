@@ -1,11 +1,11 @@
-import {ExerciceSet} from "./exerciceSet";
+import {Muscle} from "./muscle";
 
 export interface Exercise {
-  id: string;
-  exerciseId: string;  // Reference to exercise in exercise library
-  exerciseName: string;
-  sets: ExerciceSet[];
-  notes?: string;
-  restBetweenSets?: number; // in seconds
-  order: number;
+  id?: number;
+  uuid?: string;
+  created?: string;
+  // category: Category;
+  muscles?: Muscle[];
+  musclesSecondary?: Muscle[];
+  errorMessage?:string,
 }

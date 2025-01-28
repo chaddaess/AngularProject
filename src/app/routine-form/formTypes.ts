@@ -13,10 +13,7 @@ export type SetForm = FormGroup<{
 }>
 
 export type RoutineForm = FormGroup<{
-  name: FormControl<string>,
-  description: FormControl<string>,
-  scheduledDays: FormArray<ExerciseDays>,
-  exercises: FormArray<ExerciseForm>
+  description: FormControl<string>, scheduledDays: FormArray<ExerciseDays>, exercises: FormArray<ExerciseForm>
 }>
 
 export type ExerciseDays = FormGroup<{
@@ -25,6 +22,7 @@ export type ExerciseDays = FormGroup<{
 
 export type ExerciseForm = FormGroup<{
   exerciseName: FormControl<string>,
+  exerciseId: FormControl<number>,
   sets: FormArray<SetForm>,
   notes: FormControl<string>,
   restBetweenSets: FormControl<number>,
