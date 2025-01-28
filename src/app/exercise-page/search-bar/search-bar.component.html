@@ -11,7 +11,7 @@
     @if (filteredExercises$ | async ) {
         <div class="autocomplete-dropdown absolute w-full mt-1 bg-white shadow-md max-h-60 overflow-y-auto z-10 border rounded-lg">
           <ul>
-            @for (exercise of filteredExercises$ | async ; track exercise) {
+            @for (exercise of filteredExercises$ | async ; track exercise.id) {
               <li class="p-2 cursor-pointer hover:bg-gray-200" (click)="selectExercise(exercise)">
                 {{ exercise.value }}
               </li>

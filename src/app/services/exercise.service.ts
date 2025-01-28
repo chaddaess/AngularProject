@@ -68,7 +68,7 @@ export class ExerciseService {
           console.log('filtered names', response.suggestions); 
           return of(response.suggestions.map((item: any) => ({
             value: item.value,
-            id: item.data.id, 
+            id: item.data.base_id, 
           })));
     }),
     catchError((error) => {
@@ -81,22 +81,25 @@ export class ExerciseService {
     getExerciseById(id: number): Observable<any> {
       return this.http.get<any>(`${API.exercisebaseinfo}/${id}`).pipe(
         map((response) => {
+          const exercise = response.exercises?.find((ex: any) => ex.language === 2) || {};
+    
           return {
             id: response.id,
-            name: response.exercises?.[1]?.name || 'N/A',
+            name: exercise.name || 'N/A',  
             category: response.category?.name || 'N/A',
             muscles: response.muscles.map((muscle: any) => muscle.name).join(', ') || 'None',
             secondaryMuscles: response.muscles_secondary.map((muscle: any) => muscle.name).join(', ') || 'None',
             equipment: response.equipment.map((item: any) => item.name).join(', ') || 'None',
-            description:this.parseDescription (response.exercises?.[1]?.description || 'No description available'),
+            description: this.parseDescription(exercise.description || 'No description available'), 
             images: (response.images && response.images.length > 0) 
-            ? response.images.map((image: any) => image.image) 
-            : ['../../assets/default_exercise.avif'],            
+              ? response.images.map((image: any) => image.image) 
+              : ['../../assets/default_exercise.avif'],            
             variations: response.variations || [],
           };
         }),
       );
     }
+    
     
   }
   

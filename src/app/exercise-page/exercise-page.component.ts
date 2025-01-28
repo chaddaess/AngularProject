@@ -1,7 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, signal } from '@angular/core';
 import { ListComponent } from './list/list.component';
 import { ExerciseService } from '../services/exercise.service';
-import { BehaviorSubject, Observable, Subscription, finalize, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, finalize, map, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ExerciseGridComponent } from './exercise-grid/exercise-grid.component';
 import { ActivatedRoute } from '@angular/router';
@@ -25,8 +25,8 @@ export class ExercisePageComponent {
   equipmentsList: { name: string; selected: boolean }[] = [];
   musclesList: { name: string; selected: boolean }[] = [];
   exercisesList: Exercise[] = [];
-  private exercisesSubject: BehaviorSubject<Exercise[]> = new BehaviorSubject<Exercise[]>([]);
-  exercises$: Observable<Exercise[]> = this.exercisesSubject.asObservable();
+  /*private exercisesSubject: BehaviorSubject<Exercise[]> = new BehaviorSubject<Exercise[]>([]);*/
+  /*exercises$: Observable<Exercise[]> = this.exercisesSubject.asObservable();*/
 
   private subscriptions: Subscription[] = [];
   private cache: Map<number, Exercise[]> = new Map();
@@ -41,35 +41,60 @@ export class ExercisePageComponent {
 
   constructor(
     private exerciseService: ExerciseService,
-    private route: ActivatedRoute) {}
-
+    private route: ActivatedRoute, ) {}
     ngOnInit() {
+      const savedState = localStorage.getItem('exercisePageState');
       const data = this.route.snapshot.data['data'];
-      this.exercisesList = data.exercises;
-      this.exercisesSubject.next(this.exercisesList);
-      this.cache.set(1, this.exercisesList);
-      this.pageOrder.push(1);
-      this.categoriesList = this.mapSelectedItems(data.categories);
-      this.musclesList = this.mapSelectedItems(data.muscles);
-      this.equipmentsList = this.mapSelectedItems(data.equipments);
-      this.filteredExercises=this.exercisesList;
-      this.isLoading.set(0); //need to fix this, executed before asynch code
+      /*console.log('Data categories:', data.categories);
+      console.log('Data muscles:', data.muscles);
+      console.log('Data equipments:', data.equipments); */
+      const dataProcessing = Promise.resolve().then(() => {
+      this.exercisesList = data.exercises || [];
+      this.categoriesList = this.mapSelectedItems(data.categories || []);
+      this.musclesList = this.mapSelectedItems(data.muscles || []);
+      this.equipmentsList = this.mapSelectedItems(data.equipments || []);
+      this.filteredExercises = this.exercisesList;
+
+      if (savedState) {
+        const parsedState = JSON.parse(savedState);
+        this.currentPage = parsedState.currentPage || 1;
+        const cacheArray = parsedState.cache || [];
+        this.cache = new Map<number, any>(cacheArray);
+        this.selectedCategories = parsedState.filters?.categories || [];
+        this.selectedMuscles = parsedState.filters?.muscles || [];
+        this.selectedEquipment = parsedState.filters?.equipment || [];
+        this.pageOrder = parsedState.pageOrder || [];
+      } else {
+        this.cache.set(1, this.exercisesList);
+        this.pageOrder.push(1);
+        
+      } });
+      dataProcessing.then(() => {
+        this.isLoading.set(0);
+        console.log("complete loading")
+      });
       this.exercisesAreLoading.set(0);
+      
+       
+    }
+    
+    mapSelectedItems(items: any[]): { name: string; selected: boolean }[] {
+      return items.map(item => ({
+        name: item.name || item, 
+        selected: false
+      }));
     }
 
-
-mapSelectedItems(items: string[]): { name: string; selected: boolean }[] {
-  return items.map(item => ({ name: item, selected: false })); // Set 'selected' to false initially
-}
 ngOnDestroy(): void {
   this.subscriptions.forEach(sub => sub.unsubscribe());
+  this.saveState();
 }
 
 loadPage(page: number) {
   if (this.cache.has(page)) {
     this.exercisesList = this.cache.get(page) || [];
-    this.filteredExercises=this.exercisesList;
-    this.exercisesSubject.next(this.exercisesList);
+    this.filterExercises();
+    /*this.exercisesSubject.next(this.exercisesList);*/
     this.updatePageOrder(page); 
     this.exercisesAreLoading.set(0); 
   } else {
@@ -88,8 +113,8 @@ fetchExercises(page: number) {
     this.cache.set(page, exercises);
     this.pageOrder.push(page); 
     this.exercisesList = exercises;
-    this.exercisesSubject.next(exercises);
-    this.filteredExercises=this.exercisesList;
+    /*this.exercisesSubject.next(exercises);*/
+    this.filterExercises();
   });
   
   this.subscriptions.push(subs);
@@ -120,6 +145,11 @@ changePage(page: number) {
     console.log("cached pages: ", this.cache.keys())  
   };
   console.log("isloading",this.isLoading());
+  this.scrollToTop();
+}
+
+scrollToTop(): void {
+  window.scrollTo(0, 0); // Scrolls to the top of the page
 
 }
   
@@ -156,11 +186,11 @@ onItemToggle(itemName: string, type: string) {
 }
 
 toggleItem(itemName: string, selectedList: string[]) {
-  const index = selectedList.indexOf(itemName);  // Find by name
+  const index = selectedList.indexOf(itemName);  
   if (index === -1) {
-    selectedList.push(itemName);  // Push only the name
+    selectedList.push(itemName);  
   } else {
-    selectedList.splice(index, 1);  // Remove the name
+    selectedList.splice(index, 1);  
   }
 }
 
@@ -211,4 +241,21 @@ toggleItem(itemName: string, selectedList: string[]) {
     this.filterExercises();
   }
 
+  saveState() {
+    const state = {
+      categories: this.categoriesList,
+      muscles:this.musclesList,
+      equipments: this.equipmentsList,
+      filters: {
+        selectedCategories: this.selectedCategories,
+        selectedMuscles: this.selectedMuscles,
+        selectedEquipment: this.selectedEquipment
+      },
+      currentPage: this.currentPage,
+      cache: Array.from(this.cache.entries()), 
+      pageOrder: this.pageOrder,
+    };
+    localStorage.setItem('exercisePageState', JSON.stringify(state));
+  }
+  
 }
