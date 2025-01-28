@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   const token = localStorage.getItem('accessToken');
-console.log(token)
   if (token) {
     const authReq = req.clone({
       setHeaders: {
