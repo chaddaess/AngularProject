@@ -7,28 +7,36 @@ import {WorkoutDto} from "../auth/dto/workout.dto";
 import {debounceTime, distinctUntilChanged, tap} from "rxjs";
 import {DayOfWeek, RoutineDto} from "../auth/dto/routine.dto";
 import {ExerciseService} from "../services/exercise.service";
+import {Router} from "@angular/router";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-routine-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './routine-form.component.html',
 })
 export class RoutineFormComponent {
   protected searchResults: any[][] = [];
+  protected formSubmitted = false;
   private readonly routineService = inject(RoutineService);
   private readonly workoutService = inject(WorkoutService);
   private readonly exerciseService = inject(ExerciseService);
   private readonly fb = inject(NonNullableFormBuilder);
   protected readonly routineForm: RoutineForm = this.fb.group({
-    description: '',
+    description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
     scheduledDays: this.fb.array<ExerciseDays>([], [Validators.required, Validators.minLength(1)]),
-    exercises: this.fb.array<ExerciseForm>([this.generateExerciseForm()])
+    exercises: this.fb.array<ExerciseForm>([this.generateExerciseForm()], [Validators.required, Validators.minLength(1)])
   });
+  private readonly router = inject(Router);
   private workout: WorkoutDto | null = null;
 
   protected get exercises(): FormArray<ExerciseForm> {
     return this.routineForm?.controls.exercises;
+  }
+
+  protected get scheduledDays(): FormArray<ExerciseDays> {
+    return this.routineForm?.controls.scheduledDays;
   }
 
   ngOnInit() {
@@ -45,14 +53,44 @@ export class RoutineFormComponent {
     this.setupExerciseSearchSubscription(0);
   }
 
+  protected getErrorMessage(control: any): string {
+    if (!control.errors) return '';
+
+    const errors = {
+      required: 'This field is required',
+      minlength: `Minimum length is ${control.errors.minlength?.requiredLength} characters`,
+      maxlength: `Maximum length is ${control.errors.maxlength?.requiredLength} characters`,
+      min: `Minimum value is ${control.errors.min?.min}`,
+      max: `Maximum value is ${control.errors.max?.max}`,
+    };
+
+    const firstError = Object.keys(control.errors)[0];
+    return errors[firstError as keyof typeof errors] || 'Invalid input';
+  }
+
+  protected isFieldInvalid(control: any): boolean {
+    return (control.invalid && (control.dirty || control.touched || this.formSubmitted));
+  }
+
   protected generateExerciseForm(): ExerciseForm {
     return this.fb.group({
-      exerciseName: ['', Validators.required],
-      exerciseId: [0],
-      sets: this.fb.array<SetForm>([this.createSetGroup()]),
-      notes: [''],
-      restBetweenSets: [60],
+      exerciseName: ['', [Validators.required]],
+      exerciseId: [0, [Validators.required, Validators.min(1)]],
+      sets: this.fb.array<SetForm>([this.createSetGroup()], [Validators.required, Validators.minLength(1)]),
+      notes: ['', [Validators.maxLength(200)]],
+      restBetweenSets: [60, [Validators.required, Validators.min(0), Validators.max(300)]],
       numberOfSets: [3, [Validators.required, Validators.min(1), Validators.max(10)]]
+    });
+  }
+
+  protected createSetGroup(): SetForm {
+    return this.fb.group({
+      reps: [0, [Validators.required, Validators.min(1), Validators.max(100)]],
+      weight: [0, [Validators.required, Validators.min(0), Validators.max(1000)]],
+      weightUnit: ['kg', [Validators.required]],
+      rer: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
+      completed: [false],
+      notes: ['', [Validators.maxLength(100)]]
     });
   }
 
@@ -88,17 +126,6 @@ export class RoutineFormComponent {
     this.searchResults.splice(exerciseIndex, 1);
   }
 
-  protected createSetGroup(): SetForm {
-    return this.fb.group({
-      reps: [0, [Validators.required, Validators.min(1)]],
-      weight: [0, [Validators.required, Validators.min(0)]],
-      weightUnit: ['kg', Validators.required],
-      rer: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-      completed: [false],
-      notes: ['']
-    });
-  }
-
   protected addSet(exerciseIndex: number): void {
     const setsArray = this.exercises.at(exerciseIndex)?.controls?.sets;
     if (setsArray?.length > 0) {
@@ -129,7 +156,7 @@ export class RoutineFormComponent {
 
   protected onSubmit(): void {
     if (!this.routineForm.valid || !this.workout?.id) {
-      console.error('Form is invalid or no default workout found');
+      this.highlightErrors();
       return;
     }
 
@@ -141,10 +168,9 @@ export class RoutineFormComponent {
       .subscribe({
         next: (results) => {
           console.log('Successfully created routine, exercises, and sets:', results);
-          // Handle success (e.g., show success message, redirect)
+          this.router.navigate(['/']);
         }, error: (error) => {
           console.error('Error in creation process:', error);
-          // Handle error (e.g., show error message)
         }
       });
   }
@@ -159,6 +185,36 @@ export class RoutineFormComponent {
       } else {
         this.searchResults[index] = [];
       }
+    });
+  }
+
+
+  private highlightErrors(): void {
+    Object.keys(this.routineForm.controls).forEach(key => {
+      const control = this.routineForm.get(key);
+      if (control?.invalid) {
+        control.markAsTouched();
+      }
+    });
+
+    // Mark all exercises and their sets as touched
+    this.exercises.controls.forEach(exercise => {
+      Object.keys(exercise.controls).forEach(key => {
+        const control = exercise.get(key);
+        if (control?.invalid) {
+          control.markAsTouched();
+        }
+      });
+
+      const setsArray = exercise.get('sets') as FormArray<SetForm>;
+      setsArray.controls.forEach(set => {
+        Object.keys(set.controls).forEach(key => {
+          const control = set.get(key);
+          if (control?.invalid) {
+            control.markAsTouched();
+          }
+        });
+      });
     });
   }
 }
