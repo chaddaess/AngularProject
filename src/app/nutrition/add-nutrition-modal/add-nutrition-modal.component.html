@@ -1,0 +1,93 @@
+<div id="modal-content-wrapper" class="p-5">
+  <header id="modal-header">
+      <h1 id="modal-title">Add plan</h1>
+  </header>
+  <form class="mb-4" [formGroup]="addNutritionPlanForm" (ngSubmit)="addNutritionPlan()">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="description" [ngClass]="{'border-red-600': shouldDisplayRequiredError('description')}">
+        Description
+      </label>
+      <input formControlName="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" type="text" placeholder="Description">
+      <p class="text-red-600 text-xs italic" 
+        *ngIf="shouldDisplayRequiredError('description')">
+        Please fill out this field.
+      </p>
+    </div>
+    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+        Caloric Goal (kcal)
+      </label>
+      <input formControlName="goal_energy" 
+        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+        type="number"
+        [ngClass]="{'border-red-600': shouldDisplayRequiredError('goal_energy')}">
+      <p class="text-red-600 text-xs italic" 
+        *ngIf="shouldDisplayRequiredError('goal_energy')"
+      >
+        Please fill out this field.
+      </p>
+    </div>
+    <div class="flex flex-wrap mb-6">
+      <div class="w-full md:w-1/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+          Protein Goal (grams)
+        </label>
+        <input formControlName="goal_protein"
+          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          type="number"
+          [ngClass]="{'border-red-600': shouldDisplayRequiredError('goal_protein')}">
+          <p class="text-red-600 text-xs italic" 
+            *ngIf="shouldDisplayRequiredError('goal_protein')"
+          >
+            Please fill out this field.
+          </p>
+      </div>
+      <div class="w-full md:w-1/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+          Carbohydrates Goal (grams)
+        </label>
+        <input formControlName="goal_carbohydrates"
+          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          type="number"
+          [ngClass]="{'border-red-600': shouldDisplayRequiredError('goal_carbohydrates')}">
+          <p class="text-red-600 text-xs italic" 
+            *ngIf="shouldDisplayRequiredError('goal_carbohydrates')"
+          >
+            Please fill out this field.
+          </p>
+      </div>
+      <div class="w-full md:w-1/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+          Fat Goal (grams)
+        </label>
+        <input formControlName="goal_fat"
+          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          type="number"
+          [ngClass]="{'border-red-600': shouldDisplayRequiredError('goal_fat')}">
+          <p class="text-red-600 text-xs italic" 
+            *ngIf="shouldDisplayRequiredError('goal_fat')"
+          >
+            Please fill out this field.
+          </p>
+      </div>
+      <div class="w-full md:w-1/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+          Fiber Goal (grams)
+        </label>
+        <input formControlName="goal_fiber"
+          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          type="number"
+          [ngClass]="{'border-red-600': shouldDisplayRequiredError('goal_fiber')}">
+          <p class="text-red-600 text-xs italic" 
+            *ngIf="shouldDisplayRequiredError('goal_fiber')"
+          >
+            Please fill out this field.
+          </p>
+      </div>
+    </div>
+  
+    <footer id="modal-footer" class="flex justify-end">
+        <button [disabled]="addNutritionPlanForm.invalid" type="submit" class="bg-red-600 text-white hover:bg-red-800 p-4 px-8" mat-raised-button id="modal-close-button">Add</button>
+    </footer>
+  </form>
+</div>

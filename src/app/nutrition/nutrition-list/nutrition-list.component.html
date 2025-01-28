@@ -1,0 +1,15 @@
+<ul role="list" class="basis-1/2 divide-y divide-gray-100 ">
+  @if(!nutritionPlans || nutritionPlans.length == 0 ){
+    <div class="text-neutral-600">No nutrition plans added yet!</div>
+  }
+  @else {
+    @for(nutritionPlan of nutritionPlans ;track nutritionPlan?.id){
+      <li>
+        <app-nutrition-item [nutritionPlan]="nutritionPlan"></app-nutrition-item>
+      </li>
+    }
+  }
+</ul>
+<app-paginator  [visiblePages]="visiblePages()" [totalPages]="totalPages"></app-paginator>
+
+

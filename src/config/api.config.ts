@@ -10,4 +10,5 @@ export const API=
     ingredient_details: `${API_BASE_URL}/api/v2/ingredientinfo`,
     search_ingredients: `${API_BASE_URL}/api/v2/ingredient/search`,
     muscle: `${API_BASE_URL}/api/v2/muscle`,
+    nutritionPlan: `${API_BASE_URL}/api/v2/nutritionplan/`,
   };

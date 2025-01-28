@@ -1,0 +1,31 @@
+
+
+
+
+
+
+<div class="h-screen">
+  <h1 class="text-2xl font-medium">Nutrition Plans</h1>
+  <hr>
+  <div class="flex flex-row pt-8">
+    <div class="basis-1/2 flex-col items-center">
+      <ul class="divide-y divide-gray-100" role="list">
+          @if (isLoading()) {
+            <div class="w-1/2 flex justify-center">
+              <app-loading-spinner></app-loading-spinner>
+            </div>
+          }
+          <app-nutrition-list
+            [totalPages]="total()"
+            [nutritionPlans]="nutritionPlans$ | async"
+            (pageChange)="onPageChange($event)">
+          </app-nutrition-list>
+      </ul>
+    </div>
+    <!-- Ingredient Details child  View  !-->
+    <div class="basis-1/2">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <button (click)="openModal()" class="absolute bottom-0 right-10 rounded-full bg-red-600 text-white text-6xl h-16 w-16 hover:bg-red-800">+</button>
+</div>
