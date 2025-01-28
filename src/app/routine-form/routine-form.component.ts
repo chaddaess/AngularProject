@@ -149,49 +149,6 @@ export class RoutineFormComponent {
       });
   }
 
-  //
-  // protected onSubmit(): void {
-  //   if (!this.routineForm.valid || !this.workout?.id) {
-  //     console.error('Form is invalid or no default workout found');
-  //     return;
-  //   }
-  //
-  //   const transformedDays = this.routineForm.value.scheduledDays!.map(({exerciseDay}) => DayOfWeek[exerciseDay as keyof typeof DayOfWeek]);
-  //   const newRoutine: RoutineDto = {
-  //     training: this.workout.id, description: this.routineForm.value.description!, day: transformedDays
-  //   }
-  //   this.routineService.createRoutine(newRoutine).pipe(tap(routine => console.log('Routine created:', routine)), switchMap(routine => {
-  //     // 2. Create exercises for the routine
-  //     const exerciseCreationPromises = this.exercises.controls.map(exerciseForm => {
-  //       const exerciseData = {
-  //         ...exerciseForm.value, routineId: routine.id, workoutId: this.defaultWorkout!.id
-  //       };
-  //       delete exerciseData.sets; // Remove sets as we'll create them separately
-  //       return this.routineService.createExercise(exerciseData);
-  //     });
-  //
-  //     return forkJoin(exerciseCreationPromises).pipe(switchMap(createdExercises => {
-  //       // 3. Create sets for each exercise
-  //       const setCreationPromises = createdExercises.map((exercise, exerciseIndex) => {
-  //         const setsForExercise = this.exercises.at(exerciseIndex).controls.sets.controls.map(setForm => ({
-  //           ...setForm.value, exerciseId: exercise.id, workoutId: this.defaultWorkout!.id, routineId: routine.id
-  //         }));
-  //
-  //         return this.workoutService.createSets(setsForExercise);
-  //       });
-  //
-  //       return forkJoin(setCreationPromises);
-  //     }));
-  //   })).subscribe({
-  //     next: (results) => {
-  //       console.log('Successfully created routine, exercises, and sets:', results);
-  //       // Handle success (e.g., show success message, redirect)
-  //     }, error: (error) => {
-  //       console.error('Error in creation process:', error);
-  //       // Handle error (e.g., show error message)
-  //     }
-  //   });
-
   private setupExerciseSearchSubscription(index: number) {
     const exerciseControl = this.exercises.at(index);
     exerciseControl.get('exerciseName')?.valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe(searchTerm => {
