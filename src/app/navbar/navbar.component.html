@@ -13,6 +13,9 @@
           <a [routerLink]="[APP_ROUTES.preferences]" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{UI_TEXTS.PREFERENCES}}</a>
         }
         @if(authService.isLoggedIn())  {
+          <a [routerLink]="[APP_ROUTES.nutrition]" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{UI_TEXTS.NUTRITION}}</a>
+        }
+        @if(authService.isLoggedIn())  {
           <a [routerLink]="['']" (click)="logout()" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">
             {{UI_TEXTS.LOGOUT}}
           </a>
