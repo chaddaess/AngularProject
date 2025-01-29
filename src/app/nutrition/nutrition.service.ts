@@ -5,6 +5,7 @@ import { API } from '../../config/api.config';
 import { AuthService } from '../auth/auth.service';
 import { GetNutritionPlansResponse, NutritionPlan } from './models/getNutritionPlansResponse.model';
 import { Settings } from '../Settings';
+import {NutritionLog} from "./models/NutritionLog";
 
 @Injectable({
   providedIn: 'root'
@@ -42,10 +43,7 @@ export class NutritionService {
       headers: requestHeaders,
     }).pipe(
       map((result) => {
-        if(!result)
-          return false;
-
-        return true
+        return !!result;
       }),
       catchError(()=>{
         return of(false)
@@ -56,4 +54,38 @@ export class NutritionService {
   selectNutritionPlan(nutritionPlan: NutritionPlan):void {
     this.#selectednutritionPlan.next(nutritionPlan)
   }
+  addNutritionLog(nutritionLog:NutritionLog):Observable<boolean>{
+    const requestHeaders = this.authService.getAuthHeaders();
+    return this.http.post(`${API.nutritionLog}`,nutritionLog,{
+      headers:requestHeaders
+    })
+    .pipe(
+        map(result=>{return !!result}),
+        catchError(()=>(of(false)))
+    )
+  }
+  getNutritionPlan(id:number){
+    const requestHeaders = this.authService.getAuthHeaders();
+    return this.http.get<NutritionPlan>(`${API.nutritionPlan}${id}`,{
+      headers:requestHeaders
+    }).pipe(
+      catchError(()=>{
+        const plan=new NutritionPlan();
+        plan.error_message="Couldn't fetch details for this plan, please try again";
+        return of(plan);
+      })
+    );
+  }
+
+  getNutritionLogs(planId:number):Observable<NutritionLog[]>{
+    const requestHeaders = this.authService.getAuthHeaders();
+    return this.http.get<{results:NutritionLog[]}>(`${API.nutritionLog}?plan=${planId}`,{
+      headers:requestHeaders
+    }).pipe(
+      map((response)=>{
+          return response.results
+      })
+    )
+  }
+
 }

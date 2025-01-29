@@ -28,7 +28,8 @@ export const UI_TEXTS = {
   BIRTHDATE: "Birthdate",
   SAVE: "Save",
   PROFILE: "Profile",
-  HEIGHT: "Height"
+  HEIGHT: "Height",
+  INGREDIENTS:"Ingredients"
 };
 
 

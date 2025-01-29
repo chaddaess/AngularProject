@@ -5,14 +5,17 @@ export type GetNutritionPlansResponse = {
   results: NutritionPlan[]
 }
 
-export type NutritionPlan = {
-  id: number
-  creation_date: string
-  description: string
-  only_logging: boolean
-  goal_energy: number
-  goal_protein: number
-  goal_carbohydrates: number
-  goal_fat: number
-  goal_fiber: number
-} | undefined
+export class NutritionPlan  {
+  constructor(
+    public id?: number,
+    public creation_data?: string,
+    public description?: string,
+    public only_logging?: boolean,
+    public goal_energy?: number,
+    public goal_protein?: number,
+    public goal_carbohydrates?: number,
+    public goal_fat?: number,
+    public goal_fiber?: number,
+    public error_message?:string,
+  ) {}
+}

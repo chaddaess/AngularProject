@@ -10,10 +10,10 @@ import { NutritionPlan } from '../models/getNutritionPlansResponse.model';
   styleUrl: './nutrition-item.component.css'
 })
 export class NutritionItemComponent {
-  @Input() nutritionPlan: NutritionPlan;
+  @Input() nutritionPlan=new NutritionPlan();
 
   constructor(private nutritionService: NutritionService) {}
-  
+
   onClick(){
     this.nutritionService.selectNutritionPlan(this.nutritionPlan)
   }

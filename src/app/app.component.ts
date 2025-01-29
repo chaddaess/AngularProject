@@ -3,7 +3,6 @@ import {LoginComponent} from "./login/login.component";
 import {Component, inject} from '@angular/core';
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet} from '@angular/router';
 import {LoaderComponent} from "./loader-page/loader.component";
-
 @Component({
   selector: 'app-root',
   standalone: true,

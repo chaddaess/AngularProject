@@ -1,15 +1,16 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, signal } from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnChanges, Output, signal } from '@angular/core';
 import { PaginatorService } from '../../paginator/paginator.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { tap } from 'rxjs';
 import { NutritionPlan } from '../models/getNutritionPlansResponse.model';
 import { NutritionItemComponent } from "../nutrition-item/nutrition-item.component";
 import { PaginatorComponent } from "../../paginator/paginator.component";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-nutrition-list',
   standalone: true,
-  imports: [NutritionItemComponent, PaginatorComponent],
+  imports: [NutritionItemComponent, PaginatorComponent, RouterLink],
   templateUrl: './nutrition-list.component.html',
   styleUrl: './nutrition-list.component.css'
 })
@@ -33,8 +34,8 @@ export class NutritionListComponent implements OnChanges {
     ngOnChanges(): void {
         this.visiblePages.set(Array.from({ length: this.totalPages}, (_, i) => i + 1))
     }
-  
-  
+
+
     changeVisiblePages(currentPage: number): void {
       if (currentPage === this.visiblePages()[this.visiblePages().length - 1] && currentPage < this.totalPages) {
         this.visiblePages().shift();

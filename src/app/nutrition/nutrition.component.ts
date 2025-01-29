@@ -12,8 +12,8 @@ import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-nutrition',
   standalone: true,
-  imports: [LoadingSpinnerComponent, 
-    NutritionListComponent, 
+  imports: [LoadingSpinnerComponent,
+    NutritionListComponent,
     AsyncPipe,
     RouterOutlet
   ],
@@ -49,7 +49,7 @@ export class NutritionComponent {
       })
     ).subscribe()
   }
-  
+
   onPageChange(page: number) {
     let offset = (page - 1) * this.limit;
     const $loaderDelay = timer(500) //loader should appear for at least 500ms to avoid flickering

@@ -5,7 +5,9 @@
   @else {
     @for(nutritionPlan of nutritionPlans ;track nutritionPlan?.id){
       <li>
-        <app-nutrition-item [nutritionPlan]="nutritionPlan"></app-nutrition-item>
+        <a [routerLink]="[nutritionPlan?.id]">
+          <app-nutrition-item [nutritionPlan]="nutritionPlan"></app-nutrition-item>
+        </a>
       </li>
     }
   }
