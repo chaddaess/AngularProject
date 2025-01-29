@@ -12,8 +12,12 @@ import {NutritionDetailsComponent} from "./nutrition/nutrition-details/nutrition
 import { BmiCalculatorComponent } from './bmi-calculator/bmi-calculator.component';
 import {RoutineFormComponent} from "./routine-form/routine-form.component";
 import {RoutinesComponent} from "./routines/routines.component";
+import {WelcomeComponent} from "./welcome/welcome.component";
 
 export const routes: Routes = [
+  {
+    path:"",component:WelcomeComponent,canActivate:[authGuard]
+  },
   {
     path: APP_ROUTES.login, component: LoginComponent
   },
