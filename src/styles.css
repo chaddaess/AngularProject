@@ -1,11 +1,24 @@
 @import "@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import "@fortawesome/fontawesome-free/css/all.css";
 @import 'ngx-toastr/toastr';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+#main-container {
+  flex: 1 1 auto;
+}
