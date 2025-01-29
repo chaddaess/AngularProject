@@ -37,7 +37,7 @@
         class="pagination flex items-center justify-center space-x-4 p-4 bg-gray-100 rounded-lg shadow-md"
       >
         <button
-          class="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow-md hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500 transition"
+          class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg shadow-md hover:bg-red-600 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500 transition"
           (click)="changePage(currentPage - 1)"
           [disabled]="currentPage === 1"
         >
@@ -45,11 +45,11 @@
         </button>
         <span class="text-sm font-medium text-gray-700">
           Page
-          <span class="font-bold text-blue-500">{{ currentPage }}</span> of
-          <span class="font-bold text-blue-500">{{ totalPages }}</span>
+          <span class="font-bold text-red-500">{{ currentPage }}</span> of
+          <span class="font-bold text-red-500">{{ totalPages }}</span>
         </span>
         <button
-          class="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow-md hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500 transition"
+          class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg shadow-md hover:bg-red-600 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500 transition"
           (click)="changePage(currentPage + 1)"
           [disabled]="currentPage === totalPages"
         >

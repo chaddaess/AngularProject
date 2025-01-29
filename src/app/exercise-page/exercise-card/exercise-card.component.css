@@ -53,7 +53,7 @@
   }
   
   .card-back {
-    background: #007bff;
+    background: rgb(223, 96, 96);
     color: #fff;
     transform: rotateY(180deg); 
     display: flex;
