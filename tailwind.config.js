@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require("tailwindcss");
 module.exports = {
   content: ["./src/**/*/*.{html,ts}"],
   theme: {
@@ -29,5 +30,25 @@ module.exports = {
       },
     },
   },
-  plugins: [],
-};
+  plugins: [
+    plugin(function ({ addBase, theme }) {
+      addBase({
+        ':root': {
+          '--primary': theme('colors.primary.DEFAULT'),
+          '--primary-hover': theme('colors.primary.hover'),
+          '--primary-focus': theme('colors.primary.focus'),
+          '--primary-red': theme('colors.primary.red'),
+          '--secondary-light': theme('colors.secondary.light'),
+          '--secondary': theme('colors.secondary.DEFAULT'),
+          '--secondary-dark': theme('colors.secondary.dark'),
+          '--secondary-darker': theme('colors.secondary.darker'),
+          '--text-dark': theme('colors.text.dark'),
+          '--text-light': theme('colors.text.light'),
+          '--text-placeholder': theme('colors.text.placeholder'),
+          '--background-dark': theme('colors.background.dark'),
+          '--focus-ring': theme('colors.focusRing'),
+          '--error': theme('colors.error'),
+        },
+      });
+    }),
+  ],};

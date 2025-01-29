@@ -1,0 +1,12 @@
+<li class="py-5 hover:bg-gray-100 cursor-pointer" (click)="onClick()">
+  <div class="flex min-w-0 gap-x-4 items-center">
+    <img class="size-12 flex-none rounded-full bg-gray-50"
+         alt="ingredient"
+         src="{{ingredient.image}}"
+         (error)="onImageLoadingError()"
+    >
+    <div class="min-w-0 flex-auto">
+      <p class="text-sm/6 font-semibold text-gray-900">{{ingredient.name}}</p>
+    </div>
+  </div>
+</li>

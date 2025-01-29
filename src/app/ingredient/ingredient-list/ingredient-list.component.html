@@ -1,0 +1,15 @@
+<ul role="list" class="basis-1/2 divide-y divide-gray-100 ">
+  @if(ingredients && ingredients![0].errorMessage){
+    <div class="text-neutral-600">{{ingredients[0].errorMessage}}</div>
+  }
+  @else {
+    @for(ingredient of ingredients ;track ingredient){
+      <li>
+        <app-ingredient-item [ingredient]="ingredient"></app-ingredient-item>
+      </li>
+    }
+  }
+</ul>
+<app-paginator  [visiblePages]="visiblePages()" [totalPages]="totalPages"></app-paginator>
+
+

@@ -1,0 +1,30 @@
+<div class="bmi-calculator">
+    <h1 class="title">BMI Calculator</h1>
+    <div class="form-container">
+      <label>
+        Height:
+        <input
+          [formControl]="heightControl"
+          type="number"
+          placeholder="Height (cm)"
+          class="input-box"
+        />
+      </label>
+      <label>
+        Weight:
+        <input
+          [formControl]="weightControl"
+          type="number"
+          placeholder="Weight (kg)"
+          class="input-box"
+        />
+      </label>
+    </div>
+    <div class="bmi-result">
+      <p *ngIf="bmi">Your BMI is: {{ bmi }}</p>
+    </div>
+    <div class="chart-container">
+      <canvas id="bmiChart"></canvas>
+    </div>
+  </div>
+  

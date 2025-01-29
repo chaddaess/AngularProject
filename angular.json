@@ -25,7 +25,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/custom-theme.scss",
+              "src/styles.css",
+              "node_modules/tailwindcss/tailwind.css",
+              "node_modules/@fortawesome/fontawesome-free/css/fontawesome.css"
+
             ],
             "scripts": []
           },
@@ -84,6 +88,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -91,5 +96,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "3dbfc9f2-c8e4-475b-8b34-8db664b4cac0"
   }
 }

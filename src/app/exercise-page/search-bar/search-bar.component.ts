@@ -23,7 +23,7 @@ export class SearchBarComponent {
 
   onSearch(query: string): void {
     if (query.trim()) {
-      this.filteredExercises$ = this.exerciseService.searchExercises(query);
+      this.filteredExercises$ = this.exerciseService.searchExercises1(query);
     } else {
       this.filteredExercises$ = of([]); 
     }

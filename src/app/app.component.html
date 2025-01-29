@@ -1,2 +1,11 @@
-batta
-<router-outlet></router-outlet>
+<app-navbar></app-navbar>
+
+@if (isLoading) {
+  @defer (on timer(200ms)) {
+    <app-loader-page></app-loader-page>
+  }
+} @else {
+  <div class="container mx-auto border-black">
+    <router-outlet></router-outlet>
+  </div>
+}
