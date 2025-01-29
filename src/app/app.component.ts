@@ -29,10 +29,8 @@ export class AppComponent {
       else if(event instanceof NavigationEnd ){
         this.includeContainer=!(event.url==="/"+APP_ROUTES.login||event.url==="/"+APP_ROUTES.preferences)
         this.isLoading=false;
-        console.log(event)
       }
       else if (
-        // event instanceof NavigationEnd||
         event instanceof NavigationCancel ||
         event instanceof NavigationError
       )
