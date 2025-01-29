@@ -5,7 +5,7 @@
     <app-loader-page></app-loader-page>
   }
 } @else {
-  <div class="container mx-auto border-black">
+  <div [ngClass]="{'container mx-auto': includeContainer}">
     <router-outlet></router-outlet>
   </div>
 }

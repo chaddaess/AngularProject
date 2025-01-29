@@ -5,6 +5,8 @@ import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Route
 import {LoaderComponent} from "./loader-page/loader.component";
 import { BmiCalculatorComponent } from './bmi-calculator/bmi-calculator.component';
 import {APP_TITLE} from "../config/const.config";
+import {APP_ROUTES} from "../config/routes.config";
+import {NgClass} from "@angular/common";
 import { ExercisePageComponent } from './exercise-page/exercise-page.component';
 
 @Component({
@@ -17,14 +19,20 @@ import { ExercisePageComponent } from './exercise-page/exercise-page.component';
 export class AppComponent {
   title : string = APP_TITLE;
   isLoading = false;
+  includeContainer=true;
   router=inject(Router)
   constructor() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.isLoading=true
       }
+      else if(event instanceof NavigationEnd ){
+        this.includeContainer=!(event.url==="/"+APP_ROUTES.login||event.url==="/"+APP_ROUTES.preferences)
+        this.isLoading=false;
+        console.log(event)
+      }
       else if (
-        event instanceof NavigationEnd ||
+        // event instanceof NavigationEnd||
         event instanceof NavigationCancel ||
         event instanceof NavigationError
       )
