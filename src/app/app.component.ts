@@ -12,7 +12,7 @@ import { ExercisePageComponent } from './exercise-page/exercise-page.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, LoginComponent, LoaderComponent, BmiCalculatorComponent,ExercisePageComponent],
+  imports: [RouterOutlet, NavbarComponent, LoginComponent, LoaderComponent, BmiCalculatorComponent, ExercisePageComponent, NgClass],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
