@@ -1,0 +1,80 @@
+<div aria-labelledby="modal-title" aria-modal="true" class="relative z-10" role="dialog">
+  <div aria-hidden="true" class="fixed inset-0 bg-gray-500/75 transition-opacity"></div>
+  <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+      <div
+        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <label class="mt-3">Ingredient</label>
+          <div class="relative mt-3">
+            <!-- Begin Search Bar  !-->
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              @if (isSearching()) {
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1.5em" height="1.5em">
+                  <radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)">
+                    <stop offset="0" stop-color="#060001"/>
+                    <stop offset=".3" stop-color="#060001" stop-opacity=".9"/>
+                    <stop offset=".6" stop-color="#060001" stop-opacity=".6"/>
+                    <stop offset=".8" stop-color="#060001" stop-opacity=".3"/>
+                    <stop offset="1" stop-color="#060001" stop-opacity="0"/>
+                  </radialGradient>
+                  <circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="11" stroke-linecap="round"
+                          stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70">
+                    <animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0"
+                                      keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"/>
+                  </circle>
+                  <circle transform-origin="center" fill="none" opacity=".2" stroke="#060001" stroke-width="11"
+                          stroke-linecap="round" cx="100" cy="100" r="70"/>
+                </svg>
+              } @else {
+                <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+              }
+            </div>
+            <input
+              [formControl]="ingredientFormControl"
+              placeholder="Search Ingredient..."
+              class="block w-full p-4 ps-10 text-sm text-gray-900 border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+              type="search"
+            />
+          </div>
+          <!-- End  Search Bar  !-->
+
+          <!-- Search Results  !-->
+          <ul class="divide-y divide-gray-100" role="list" [hidden]="hideResults()">
+            @for (ingredient of searchIngredients$|async; track ingredient.id) {
+              <!-- Error in search request  !-->
+              @if (ingredient.errorMessage) {
+                <div class="text-center text-neutral-600 mt-2">{{ ingredient.errorMessage }}</div>
+              } @else {
+                <li>
+                  <app-ingredient-item [ingredient]="ingredient"></app-ingredient-item>
+                </li>
+              }
+            }
+          </ul>
+
+          <form [formGroup]="nutritionLogForm" class="flex flex-col" (ngSubmit)="onSubmit()">
+            <label class="mt-3">Quantity</label>
+            <input
+              formControlName="quantity"
+              type="number"
+              class="w-full bg-transparent text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow  mt-3"
+            >
+            <label class=" mt-3">Date</label>
+            <input
+              formControlName="date"
+              type="date"
+              class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mt-3"
+            >
+            <button  type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full  mt-3">Add Log</button>
+            <button (click)="closeModal()" class="bg-neutral-950  text-white font-bold py-2 px-4 rounded-full  mt-3">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

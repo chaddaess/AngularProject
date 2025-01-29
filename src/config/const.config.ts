@@ -82,5 +82,6 @@ export const UI_TEXTS = {
   USER_SETTINGS_UPDATE_SUCCESS: "User settings updated successfully!",
   INVALID_DATA: "Invalid data provided.",
   UNAUTHORIZED: "Unauthorized. Please log in again.",
+  INGREDIENTS:"Ingredients",
   BMI: "BMI",
 };
