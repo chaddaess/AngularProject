@@ -16,6 +16,8 @@ import {WelcomeComponent} from "./welcome/welcome.component";
 import { ExercisePageComponent } from './exercise-page/exercise-page.component';
 import { exerciseResolver } from './resolvers/exercise.resolver';
 import { ExerciseDetailsComponent } from './exercise-details/exercise-details.component';
+
+
 export const routes: Routes = [
   {
     path:"",component:WelcomeComponent,canActivate:[authGuard]
