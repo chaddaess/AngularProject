@@ -96,7 +96,7 @@
               }
 
               <!-- Search Results -->
-              @if (searchResults[exerciseIndex]?.length && !searchResults[exerciseIndex][0]?.errorMessage) {
+              @if (searchResults[exerciseIndex].length && !searchResults[exerciseIndex][0]?.errorMessage) {
                 <ul
                   class="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
                   @for (result of searchResults[exerciseIndex]; track result.id) {
