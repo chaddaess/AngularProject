@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Muscle} from "../model/muscle";
+import {Muscle} from "../models/muscle";
 import {API} from "../../config/api.config";
 
 @Component({

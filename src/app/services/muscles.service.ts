@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Muscle} from "../model/muscle";
+import {Muscle} from "../models/muscle";
 import {map, Observable} from "rxjs";
 import {API} from "../../config/api.config";
 import {MuscleResponse} from "../../MuscleResponse";
@@ -8,7 +8,7 @@ import {MuscleResponse} from "../../MuscleResponse";
 @Injectable({
   providedIn: 'root'
 })
-export class RoutinesService {
+export class MusclesService {
   private http = inject(HttpClient);
   constructor() { }
 

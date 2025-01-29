@@ -1,4 +1,4 @@
-import {Muscle} from "./app/model/muscle";
+import {Muscle} from "./app/models/muscle";
 
 export interface MuscleResponse {
   count: number;
