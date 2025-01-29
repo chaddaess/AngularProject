@@ -5,4 +5,5 @@ export const APP_ROUTES = {
   routines:"routines",
   createRoutine:"routines/create",
   ingredient: "ingredients",
+  bmiCalculator: "bmi-calculator",
 }

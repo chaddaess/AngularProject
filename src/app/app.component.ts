@@ -3,12 +3,13 @@ import {LoginComponent} from "./login/login.component";
 import {Component, inject} from '@angular/core';
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet} from '@angular/router';
 import {LoaderComponent} from "./loader-page/loader.component";
+import { BmiCalculatorComponent } from './bmi-calculator/bmi-calculator.component';
 import {APP_TITLE} from "../config/const.config";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, LoginComponent, LoaderComponent],
+  imports: [RouterOutlet, NavbarComponent, LoginComponent, LoaderComponent, BmiCalculatorComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

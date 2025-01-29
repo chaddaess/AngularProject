@@ -6,6 +6,7 @@ import {APP_ROUTES} from "../config/routes.config";
 import {IngredientComponent} from "./ingredient/ingredient.component";
 import {IngredientDetailsComponent} from "./ingredient/ingredient-details/ingredient-details.component";
 import {ingredientResolver} from "./ingredient/resolvers/ingredient-resolver";
+import { BmiCalculatorComponent } from './bmi-calculator/bmi-calculator.component';
 import {RoutineFormComponent} from "./routine-form/routine-form.component";
 import {RoutinesComponent} from "./routines/routines.component";
 
@@ -30,5 +31,8 @@ export const routes: Routes = [
       }
     ],
     resolve:{ingredients:ingredientResolver}
-  }
+  },
+  {
+    path: APP_ROUTES.bmiCalculator, component: BmiCalculatorComponent
+  },
 ];
