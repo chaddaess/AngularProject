@@ -7,7 +7,6 @@
     <div class="hidden w-full md:block md:w-auto" >
       <div class="flex flex-col font-medium p-4 md:p-0 mt-4 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
           <a [routerLink]="['']" class="block py-2 px-3 text-white rounded md:bg-transparent md:p-0" aria-current="page">{{UI_TEXTS.WEIGHT}}</a>
-          <a [routerLink]="['']" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{ UI_TEXTS.ROUTINES }}</a>
           <a [routerLink]="[APP_ROUTES.bmiCalculator]" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{UI_TEXTS.BMI}}</a>
           <a [routerLink]="[APP_ROUTES.routines]" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{ UI_TEXTS.ROUTINES }}</a>
         @if(authService.isLoggedIn())  {
