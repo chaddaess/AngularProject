@@ -9,8 +9,13 @@
           <a [routerLink]="['']" class="block py-2 px-3 text-white rounded md:bg-transparent md:p-0" aria-current="page">{{UI_TEXTS.WEIGHT}}</a>
           <a [routerLink]="[APP_ROUTES.bmiCalculator]" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{UI_TEXTS.BMI}}</a>
           <a [routerLink]="[APP_ROUTES.routines]" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{ UI_TEXTS.ROUTINES }}</a>
+          <a [routerLink]="['ingredients']" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{ UI_TEXTS.INGREDIENTS }}</a>
+
         @if(authService.isLoggedIn())  {
           <a [routerLink]="[APP_ROUTES.preferences]" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{UI_TEXTS.PREFERENCES}}</a>
+        }
+        @if(authService.isLoggedIn())  {
+          <a [routerLink]="[APP_ROUTES.nutrition]" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">{{UI_TEXTS.NUTRITION}}</a>
         }
         @if(authService.isLoggedIn())  {
           <a [routerLink]="['']" (click)="logout()" class="block py-2 px-3 rounded md:hover:bg-transparent md:border-0 md:p-0">

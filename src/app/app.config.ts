@@ -3,17 +3,19 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import {provideHttpClient, withInterceptors} from "@angular/common/http";
-import {provideAnimations} from "@angular/platform-browser/animations";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {provideToastr} from "ngx-toastr";
 import {authInterceptor} from "./auth-interceptor";
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideHttpClient(
+  providers: [
+    provideHttpClient(
     withInterceptors([authInterceptor]),
-  ),provideRouter(routes),provideAnimations(),
-    provideToastr({
-      positionClass: 'toast-top-right',
-      timeOut: 5000,
-      preventDuplicates: true,
-    })]
+  ),
+    provideRouter(routes),
+    provideAnimationsAsync(),provideToastr({
+    positionClass: 'toast-top-right',
+    timeOut: 5000,
+    preventDuplicates: true,
+  })]
 };

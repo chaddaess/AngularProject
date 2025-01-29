@@ -6,6 +6,9 @@ import {APP_ROUTES} from "../config/routes.config";
 import {IngredientComponent} from "./ingredient/ingredient.component";
 import {IngredientDetailsComponent} from "./ingredient/ingredient-details/ingredient-details.component";
 import {ingredientResolver} from "./ingredient/resolvers/ingredient-resolver";
+import { NutritionComponent } from './nutrition/nutrition.component';
+import { nutritionResolver } from './nutrition/resolvers/nutrition-resolver';
+import {NutritionDetailsComponent} from "./nutrition/nutrition-details/nutrition-details.component";
 import { BmiCalculatorComponent } from './bmi-calculator/bmi-calculator.component';
 import {RoutineFormComponent} from "./routine-form/routine-form.component";
 import {RoutinesComponent} from "./routines/routines.component";
@@ -35,4 +38,11 @@ export const routes: Routes = [
   {
     path: APP_ROUTES.bmiCalculator, component: BmiCalculatorComponent
   },
+  {
+    path: 'nutrition', component: NutritionComponent,canActivate: [authGuard],
+    resolve:{nutritionPlans:nutritionResolver}
+  },
+  {
+    path:"nutrition/:id",component:NutritionDetailsComponent,canActivate: [authGuard]
+  }
 ];
