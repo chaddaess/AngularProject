@@ -84,4 +84,6 @@ export const UI_TEXTS = {
   UNAUTHORIZED: "Unauthorized. Please log in again.",
   INGREDIENTS:"Ingredients",
   BMI: "BMI",
+  EXERCISES:"Exercises",
+
 };

@@ -1,0 +1,36 @@
+.search-bar-container {
+    position: relative;
+  }
+  
+  .autocomplete-dropdown {
+    position: absolute;
+    width: 100%; /* Make sure it matches the input width */
+    top: 100%; /* Position below the input field */
+    left: 0;
+    z-index: 10; /* Ensure it appears on top */
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 200px; /* Limit the height of the dropdown */
+    overflow-y: auto; /* Allow scrolling if too many items */
+  }
+  
+  .autocomplete-dropdown ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .autocomplete-dropdown li {
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .autocomplete-dropdown li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .autocomplete-dropdown p {
+    padding: 8px;
+    text-align: center;
+  }
+  
