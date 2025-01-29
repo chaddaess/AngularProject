@@ -3,8 +3,8 @@ import * as THREE from 'three';
 import {Color} from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
-import {RoutinesService} from "../services/routines.service";
-import {Muscle} from "../model/muscle";
+import {MusclesService} from "../services/muscles.service";
+import {Muscle} from "../models/muscle";
 import {MuscleTooltipComponent} from "../muscle-tooltip/muscle-tooltip.component";
 
 @Component({
@@ -34,7 +34,7 @@ export class BodyViewerComponent implements OnInit, OnDestroy {
   // Keep reference to the original material to revert color
   private originalMaterial: THREE.Material | null = null;
   private hoverColor = new THREE.Color('red');
-  private routinesService = inject(RoutinesService);
+  private routinesService = inject(MusclesService);
   private muscleMap = new Map<string, Muscle>();
 
   ngOnInit() {

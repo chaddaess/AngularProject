@@ -7,16 +7,24 @@ import {IngredientComponent} from "./ingredient/ingredient.component";
 import {IngredientDetailsComponent} from "./ingredient/ingredient-details/ingredient-details.component";
 import {ingredientResolver} from "./ingredient/resolvers/ingredient-resolver";
 import { BmiCalculatorComponent } from './bmi-calculator/bmi-calculator.component';
+import {RoutineFormComponent} from "./routine-form/routine-form.component";
+import {RoutinesComponent} from "./routines/routines.component";
 
 export const routes: Routes = [
   {
     path: APP_ROUTES.login, component: LoginComponent
   },
   {
-    path: APP_ROUTES.preferences, component: UserSettingsComponent , canActivate: [authGuard]
+    path: APP_ROUTES.preferences, component: UserSettingsComponent, canActivate: [authGuard]
   },
   {
-    path: 'ingredients', component: IngredientComponent, children: [
+    path: APP_ROUTES.routines, component: RoutinesComponent, canActivate: [authGuard]
+  },
+  {
+    path: APP_ROUTES.createRoutine, component: RoutineFormComponent, canActivate: [authGuard]
+  },
+  {
+    path: APP_ROUTES.ingredient, component: IngredientComponent, children: [
       {
         path: ":id",
         component: IngredientDetailsComponent,
@@ -25,6 +33,6 @@ export const routes: Routes = [
     resolve:{ingredients:ingredientResolver}
   },
   {
-    path: APP_ROUTES.bmiCalculator, component: BmiCalculatorComponent 
+    path: APP_ROUTES.bmiCalculator, component: BmiCalculatorComponent
   },
 ];

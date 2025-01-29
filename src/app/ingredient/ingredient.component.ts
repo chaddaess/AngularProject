@@ -93,7 +93,4 @@ export class IngredientComponent {
       })
     )
   }
-
-
-
 }

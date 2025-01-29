@@ -1,9 +1,9 @@
 export const CONST = {
   accessToken: "accessToken",
-  currentUser:"currentUser",
+  currentUser: "currentUser",
   username: "username",
   password: "password",
-  defaultIngredientImage:'assets/default-ing.png',
+  defaultIngredientImage: 'assets/default-img.png',
   chartOptions: {
     responsive: true,
     scales: {
@@ -77,9 +77,10 @@ export const UI_TEXTS = {
   SAVE: "Save",
   PROFILE: "Profile",
   HEIGHT: "Height",
+  API_ERROR: "An unexpected error occurred. Please try again later.",
+  LOGIN_ERROR: "Invalid credentials. Please try again.",
+  USER_SETTINGS_UPDATE_SUCCESS: "User settings updated successfully!",
+  INVALID_DATA: "Invalid data provided.",
+  UNAUTHORIZED: "Unauthorized. Please log in again.",
   BMI: "BMI",
 };
-
-
-
-

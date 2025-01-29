@@ -1,6 +1,9 @@
-export const APP_ROUTES={
+export const APP_ROUTES = {
   login:"login",
   preferences:"preferences",
   dashboard: "dashboard",
-  bmiCalculator: "bmi-calculator"
+  routines:"routines",
+  createRoutine:"routines/create",
+  ingredient: "ingredients",
+  bmiCalculator: "bmi-calculator",
 }
