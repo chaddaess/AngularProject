@@ -31,8 +31,7 @@ export class AuthService {
   }
 
   getUserProfile() {
-    const headers = this.getAuthHeaders();
-    return this.httpClient.get<User>(API.userProfile, {headers}).pipe(
+    return this.httpClient.get<User>(API.userProfile).pipe(
       tap((user) => {
         sessionStorage.setItem(CONST.currentUser, JSON.stringify(user));
         this.currentUserSubject.next(user);
@@ -57,8 +56,7 @@ export class AuthService {
     });
   }
   updateUserSettings(data:Partial<User>){
-    const headers = this.getAuthHeaders();
-    return this.httpClient.post(API.userProfile, data, { headers }).pipe(
+    return this.httpClient.post(API.userProfile, data).pipe(
       switchMap(() => this.getUserProfile()),
       tap(() => {
         console.log('User settings updated successfully.');
