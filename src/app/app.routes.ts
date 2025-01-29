@@ -12,12 +12,16 @@ import {NutritionDetailsComponent} from "./nutrition/nutrition-details/nutrition
 import { BmiCalculatorComponent } from './bmi-calculator/bmi-calculator.component';
 import {RoutineFormComponent} from "./routine-form/routine-form.component";
 import {RoutinesComponent} from "./routines/routines.component";
+import {WelcomeComponent} from "./welcome/welcome.component";
 import { ExercisePageComponent } from './exercise-page/exercise-page.component';
 import { exerciseResolver } from './resolvers/exercise.resolver';
 import { ExerciseDetailsComponent } from './exercise-details/exercise-details.component';
-
+import {WelcomeComponent} from "./welcome/welcome.component";
 
 export const routes: Routes = [
+  {
+    path:"",component:WelcomeComponent,canActivate:[authGuard]
+  },
   {
     path: APP_ROUTES.login, component: LoginComponent
   },
@@ -53,7 +57,7 @@ export const routes: Routes = [
     path: 'exercises', component: ExercisePageComponent,
     resolve:{data: exerciseResolver}
   },
-  
+
   { path: 'exercise/:id', component: ExerciseDetailsComponent },
 
 ];
