@@ -3,6 +3,8 @@ import {LoginComponent} from "./login/login.component";
 import {Component, inject} from '@angular/core';
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet} from '@angular/router';
 import {LoaderComponent} from "./loader-page/loader.component";
+import {APP_TITLE} from "../config/const.config";
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -11,7 +13,7 @@ import {LoaderComponent} from "./loader-page/loader.component";
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title : string = "HealthSphere"
+  title : string = APP_TITLE;
   isLoading = false;
   router=inject(Router)
   constructor() {
