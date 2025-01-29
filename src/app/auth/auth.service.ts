@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, switchMap, tap} from "rxjs";
+import {BehaviorSubject, catchError, switchMap, tap, throwError} from "rxjs";
 import {CredentialsDto} from "./dto/credentials.dto";
 import {API} from "../../config/api.config";
 import {User} from "./user";
-import {CONST} from "../../config/const.config";
+import {CONST, UI_TEXTS} from "../../config/const.config";
 
 
 @Injectable({
@@ -13,8 +13,8 @@ import {CONST} from "../../config/const.config";
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
-
-  constructor(private httpClient: HttpClient) {
+  private httpClient = inject(HttpClient)
+  constructor() {
     const storedUser = sessionStorage.getItem(CONST.currentUser);
     if (storedUser) {
       this.currentUserSubject.next(JSON.parse(storedUser));
@@ -56,10 +56,24 @@ export class AuthService {
       'Authorization': `Bearer ${access_token}`
     });
   }
-  updateUserSettings(data:any){
+  updateUserSettings(data:Partial<User>){
     const headers = this.getAuthHeaders();
-    return this.httpClient.post(API.userProfile, data, {headers}).pipe(
+    return this.httpClient.post(API.userProfile, data, { headers }).pipe(
       switchMap(() => this.getUserProfile()),
+      tap(() => {
+        console.log('User settings updated successfully.');
+      }),
+      catchError((error) => {
+        if (error.status === 400) {
+          return throwError(() => new Error(UI_TEXTS.INVALID_DATA));
+        } else if (error.status === 401) {
+          return throwError(() => new Error(UI_TEXTS.UNAUTHORIZED));
+        } else if (error.status === 500) {
+          return throwError(() => new Error(UI_TEXTS.API_ERROR));
+        }
+        return throwError(() => new Error(UI_TEXTS.API_ERROR));
+      })
     );
+
   }
 }

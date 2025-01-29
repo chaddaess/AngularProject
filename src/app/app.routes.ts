@@ -23,7 +23,7 @@ export const routes: Routes = [
     path: APP_ROUTES.createRoutine, component: RoutineFormComponent, canActivate: [authGuard]
   },
   {
-    path: 'ingredients', component: IngredientComponent, children: [
+    path: APP_ROUTES.ingredient, component: IngredientComponent, children: [
       {
         path: ":id",
         component: IngredientDetailsComponent,

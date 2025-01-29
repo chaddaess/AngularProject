@@ -28,5 +28,10 @@ export const UI_TEXTS = {
   BIRTHDATE: "Birthdate",
   SAVE: "Save",
   PROFILE: "Profile",
-  HEIGHT: "Height"
+  HEIGHT: "Height",
+  API_ERROR: "An unexpected error occurred. Please try again later.",
+  LOGIN_ERROR: "Invalid credentials. Please try again.",
+  USER_SETTINGS_UPDATE_SUCCESS: "User settings updated successfully!",
+  INVALID_DATA: "Invalid data provided.",
+  UNAUTHORIZED: "Unauthorized. Please log in again."
 };

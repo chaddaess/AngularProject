@@ -1,9 +1,11 @@
 // user-settings.component.ts
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../auth/user';
 import {UI_TEXTS} from "../../config/const.config";
+import {catchError, EMPTY, tap} from "rxjs";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-user-settings',
@@ -18,7 +20,10 @@ export class UserSettingsComponent {
   profileForm!: FormGroup;
   currentUser: User | undefined;
   protected readonly UI_TEXTS = UI_TEXTS;
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  private toastr = inject(ToastrService);
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  constructor() {}
 
   ngOnInit(): void {
     this.initializeForm();
@@ -37,10 +42,10 @@ export class UserSettingsComponent {
 
   initializeForm(): void {
     this.profileForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
+      username: [''],
+      email: ['', [Validators.email]],
       birthdate: [''],
-      height: ['', [Validators.required, Validators.min(10), Validators.max(350)]],
+      height: ['', [Validators.min(10), Validators.max(350)]],
     });
   }
 
@@ -50,7 +55,16 @@ export class UserSettingsComponent {
             ...this.currentUser,
             ...this.profileForm.value,
           };
-      this.authService.updateUserSettings(updatedUser).subscribe((data: any) => {console.log(data)});
+      this.authService.updateUserSettings(updatedUser).pipe(
+        tap(() => {
+          this.toastr.success(UI_TEXTS.USER_SETTINGS_UPDATE_SUCCESS);
+        }),
+        catchError((error) => {
+          const errorMessage = error.message || UI_TEXTS.API_ERROR;
+          this.toastr.error(errorMessage);
+          return EMPTY;
+        })
+      ).subscribe();
     } else {
       console.log('Form is invalid');
     }

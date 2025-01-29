@@ -3,5 +3,6 @@ export const APP_ROUTES = {
   preferences:"preferences",
   dashboard: "dashboard",
   routines:"routines",
-  createRoutine:"routines/create"
+  createRoutine:"routines/create",
+  ingredient: "ingredients",
 }
