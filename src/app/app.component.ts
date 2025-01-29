@@ -5,11 +5,12 @@ import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Route
 import {LoaderComponent} from "./loader-page/loader.component";
 import { BmiCalculatorComponent } from './bmi-calculator/bmi-calculator.component';
 import {APP_TITLE} from "../config/const.config";
+import { ExercisePageComponent } from './exercise-page/exercise-page.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, LoginComponent, LoaderComponent, BmiCalculatorComponent],
+  imports: [RouterOutlet, NavbarComponent, LoginComponent, LoaderComponent, BmiCalculatorComponent,ExercisePageComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

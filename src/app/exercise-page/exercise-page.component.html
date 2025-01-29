@@ -1,0 +1,69 @@
+@if (isLoading())
+{ llllll
+  <app-loading></app-loading>
+}
+@else
+{
+  <div style="display: flex">
+    <div style="width: 25%">
+      <app-list
+        title="Catégorie"
+        [items]="categoriesList"
+        (toggleItem)="onItemToggle($event, 'categories')"
+      >
+      </app-list>
+
+      <br /><br />
+      <app-list
+        title="Equipement"
+        [items]="equipmentsList"
+        (toggleItem)="onItemToggle($event, 'equipments')"
+      >
+      </app-list>
+      <br /><br />
+      <app-list
+        title="Muscles"
+        [items]="musclesList"
+        (toggleItem)="onItemToggle($event, 'muscles')"
+      >
+      </app-list>
+    </div>
+
+    <div style="width: 75%; position: relative">
+      
+
+      
+      <div
+        class="pagination flex items-center justify-center space-x-4 p-4 bg-gray-100 rounded-lg shadow-md"
+      >
+        <button
+          class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg shadow-md hover:bg-red-600 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500 transition"
+          (click)="changePage(currentPage - 1)"
+          [disabled]="currentPage === 1"
+        >
+          <
+        </button>
+        <span class="text-sm font-medium text-gray-700">
+          Page
+          <span class="font-bold text-red-500">{{ currentPage }}</span> of
+          <span class="font-bold text-red-500">{{ totalPages }}</span>
+        </span>
+        <button
+          class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg shadow-md hover:bg-red-600 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500 transition"
+          (click)="changePage(currentPage + 1)"
+          [disabled]="currentPage === totalPages"
+        >
+          >
+        </button>
+      </div>
+      <div class="relative">
+        <app-search-bar ></app-search-bar>
+      </div>
+
+      <app-exercise-grid
+        [loading]="exercisesAreLoading"
+        [exercises]="filteredExercises"
+      ></app-exercise-grid>
+    </div>
+  </div>
+}

@@ -17,4 +17,8 @@ export const API=
     exercise_base: `${API_BASE_URL}/api/v2/exercisebaseinfo/`,
     nutritionPlan: `${API_BASE_URL}/api/v2/nutritionplan/`,
     nutritionLog:`${API_BASE_URL}/api/v2/nutritiondiary/`,
-  };
+    category:`${API_BASE_URL}/api/v2/exercisecategory`,
+    equipment:`${API_BASE_URL}/api/v2/equipment`,
+    exercisebaseinfo:`${API_BASE_URL}/api/v2/exercisebaseinfo`,
+    exerciseSearch:`${API_BASE_URL}/api/v2/exercise/search`,
+};

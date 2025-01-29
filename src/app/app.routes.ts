@@ -12,6 +12,10 @@ import {NutritionDetailsComponent} from "./nutrition/nutrition-details/nutrition
 import { BmiCalculatorComponent } from './bmi-calculator/bmi-calculator.component';
 import {RoutineFormComponent} from "./routine-form/routine-form.component";
 import {RoutinesComponent} from "./routines/routines.component";
+import { ExercisePageComponent } from './exercise-page/exercise-page.component';
+import { exerciseResolver } from './resolvers/exercise.resolver';
+import { ExerciseDetailsComponent } from './exercise-details/exercise-details.component';
+
 
 export const routes: Routes = [
   {
@@ -44,5 +48,12 @@ export const routes: Routes = [
   },
   {
     path:"nutrition/:id",component:NutritionDetailsComponent,canActivate: [authGuard]
-  }
+  },
+  {
+    path: 'exercises', component: ExercisePageComponent,
+    resolve:{data: exerciseResolver}
+  },
+  
+  { path: 'exercise/:id', component: ExerciseDetailsComponent },
+
 ];
