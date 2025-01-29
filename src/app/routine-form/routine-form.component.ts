@@ -102,17 +102,6 @@ export class RoutineFormComponent {
         this.setupExerciseSearchSubscription(newIndex);
     }
 
-    protected onSearchExercise(event: Event, index: number) {
-        const searchTerm = (event.target as HTMLInputElement).value;
-        if (searchTerm && searchTerm.length >= 2) {
-            this.exerciseService.searchExercises(searchTerm).subscribe(results => {
-                this.searchResults[index] = results;
-            });
-        } else {
-            this.searchResults[index] = [];
-        }
-    }
-
     protected selectExercise(exercise: any, index: number) {
         const exerciseForm = this.exercises.at(index);
         exerciseForm.patchValue({
@@ -177,7 +166,9 @@ export class RoutineFormComponent {
 
     private setupExerciseSearchSubscription(index: number) {
         const exerciseControl = this.exercises.at(index);
-        exerciseControl.get('exerciseName')?.valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe(searchTerm => {
+        exerciseControl.get('exerciseName')?.valueChanges
+          .pipe(debounceTime(300), distinctUntilChanged())
+          .subscribe(searchTerm => {
             if (searchTerm && searchTerm.length >= 2) {
                 this.exerciseService.searchExercises(searchTerm).subscribe(results => {
                     this.searchResults[index] = results;
