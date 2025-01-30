@@ -21,7 +21,7 @@ import {ActivatedRoute} from "@angular/router";
   styleUrl: './nutrition-plan-progress.component.css'
 })
 export class NutritionPlanProgressComponent {
-  @Input() nutritionPlanId=0
+  nutritionPlanId=0
   nutritionService=inject(NutritionService)
   ingredientService=inject(IngredientService)
   toaster=inject(ToastrService)
